@@ -1,7 +1,7 @@
 const fs = require('fs'); // 파일 시스템 모듈을 사용할때 필요함
 
 
-const data = [];
+let data = [];
 
 
 /**
@@ -64,30 +64,6 @@ function getMonth(year, month) {
 }
 
 /**
-* 필요한 년도와 월, 일의 json 데이터를 읽기 및 생성하는 method
-* @param {number} year 
-* @param {number} month 
-* @param {number} day 
-* @returns 
-*/
-function getDate(year, month, day) {
-  const thatMonth = getMonth(year, month);
-
-  const days = thatMonth.days;
-  const thatDay = days.find(e => e.day === day);
-  if (thatDay == null) {
-      days.push({
-          day,
-          work: 'null',
-          schedule: []
-      });
-      return getDay(year, month, day);
-  }
-
-  return thatDay;
-}
-
-/**
  * 
  * @param {*} year 
  * @param {*} month 
@@ -147,22 +123,23 @@ function periodOfMonth(year, month){
   return result;
 }
 
-// 해당 주차의 day를 출력해 가공한 뒤 반환
 /**
- * 
- * @param {*} ord 
- * @param {*} days 
+ * 달력의 ord 번 째 주의 날짜를 days 배열을 통해 html로 반환
+ * @param {number} ord 
+ * @param {Array} days 
  * @returns 
  */
 function printOneWeekDay(ord, days){
   let html = ``;
 
   for(let i = 0; i < 7 ; i++){
+    const today = days[ord][i];
     let day = `<div class="col d${i}">`;
-    if(days[ord][i] === 0){
+
+    if(today === 0){
       day += `&nbsp;</div>`;
     } else{
-      day += `${days[ord][i]}</div>`;
+      day += `${today}</div>`;
     }
 
     html += day;
@@ -172,7 +149,7 @@ function printOneWeekDay(ord, days){
 }
 
 /**
- * 
+ * 달력에서의 일간 근무를 삽입하여 html로 가공한 뒤 반환해줌
  * @param {number} ord 
  * @param {number} year 
  * @param {number} month 
@@ -183,18 +160,18 @@ function printOneWeekWork(ord, year, month, days){
   let html = ``;
   loadFile();
 
-  const theMonth = getMonth(year, month);
+  const theMonthDays = getMonth(year, month).days;
 
   for(let i = 0; i < 7 ; i++){
-    const theDay = theMonth.find(e => e.day === days[ord][i]);
+    const today = theMonthDays.find(e => e.day === days[ord][i]);
     let day = `<div class="col d${i}">`;
 
-    if(days[ord][i] === 0){
+    if(today === 0){ // today가 저번달 혹은 다음달이라면 공백 추가하기
       day += `&nbsp;</div>`;
     } else{
 
-      if(theDay){
-        day += `${theDay.work}</div>`;
+      if(today){
+        day += `${today.work}</div>`;
       } else{
         day += `NULL</div>`;
       }
@@ -206,11 +183,11 @@ function printOneWeekWork(ord, year, month, days){
 }
 
 /**
- * 
- * @param {*} ord 
- * @param {*} year 
- * @param {*} month 
- * @param {*} days 
+ * ord번째 주의 근무 일정을 html로 반환해줌 
+ * @param {number} ord 
+ * @param {number} year 
+ * @param {number} month 
+ * @param {Array} days 
  * @returns 
  */
 function printOneWeekSchedule(ord, year, month, days){
@@ -218,23 +195,24 @@ function printOneWeekSchedule(ord, year, month, days){
 
   loadFile();
 
-  const theMonth = getMonth(year, month);
+  const theMonthDays = getMonth(year, month).days;
 
   for(let i = 0; i < 7 ; i++){
+    const today = theMonthDays.find(e => e.day === days[ord][i]);
     let day = `<div class="col d${i} schedule">`;
 
-    if(days[ord][i] === 0){
+    if(today == null){
       //console.log("왜 이게 실행됨?");
       day += `&nbsp;</div>`;
     } else{
-      if(datas[days[ord][i]-1] != undefined){
-        //console.log("오 이번엔 얘야?");
-        if(datas[days[ord][i]-1].schedule.length > 0){
-          for(let j = 0; j < datas[days[ord][i]-1].schedule.length; j++){
-            day += `<div class="btn"><font size=2>${datas[days[ord][i]-1].schedule[j].title}</font></div>`;
+      if(today != undefined){
+        if(today.schedule.length > 0){
+          for(let j = 0; j < today.schedule.length; j++){
+            day += `<div class="btn"><font size=2>${today.schedule[j].title}</font></div>`;
           }
         } else{
-          day += `<div class="null">&nbsp;</div><div class="null">&nbsp;</div>`;
+          const empty = `<div class="null">&nbsp;</div><div class="null">&nbsp;</div>`;
+          day += empty;
         }
 
         day += `</div>`;
@@ -251,15 +229,15 @@ function printOneWeekSchedule(ord, year, month, days){
 }
 
 /**
- * 
- * @param {*} ord 
- * @param {*} days 
- * @param {*} work 
- * @param {*} schedule 
+ * ord번째 주의 날짜, 근무 일정, 개인 일정을 모두 정리하여  html로 반환함
+ * @param {number} ord 
+ * @param {string} days 
+ * @param {string} work 
+ * @param {string} schedule 
  * @returns 
  */
-function printWeek(ord, days, work, schedule){
-  return `
+function printWeek(ord, days, works, schedules){
+    return `
   <div class="week-${ord}" style="border: 0px;">
 
   <div class="row days">
@@ -267,32 +245,30 @@ function printWeek(ord, days, work, schedule){
   </div>
     
   <div class="row work">
-    ${work}
+    ${works}
   </div>
 
   <div class="row shcedule">
-    ${schedule}
+    ${schedules}
   </div>
   `;
 }
 
-// 해당 월의 총 달력을 반환?
 /**
- * 
- * @param {*} year 
- * @param {*} month 
+ * 초기 날짜를 저장하는 이차원 배열인 days생성 및 각각의 주차들을 모두 모은 뒤 한 달 형태의 html로 반환
+ * @param {number} year 
+ * @param {number} month 
  * @returns 
  */
 function printWeeks(year, month){
-  const date = new Date();
-  date.setFullYear(year, month-1, 1);
+  const _date = new Date();
+  _date.setFullYear(year, month-1, 1);
 
-  const startDay = date.getDay(); //0~6
+  const startDay = _date.getDay(); //0~6
   const period = periodOfMonth(year, month);
   let day = 1;
   let days = [];
 
-  // save 
   for(let i = 0; i < 6; i++){
     let week = [];
     for(let j = 0; j < 7; j++){
@@ -311,8 +287,8 @@ function printWeeks(year, month){
 
   for(let i = 0; i < 6; i++){
     html += (printWeek(i, printOneWeekDay(i, days), 
-                         printOneWeekWork(i, year, month, days),
-                         printOneWeekSchedule(i, year, month, days)) + '</div>');
+                          printOneWeekWork(i, year, month, days),
+                          printOneWeekSchedule(i, year, month, days)) + '</div>');
   }
 
 
@@ -333,8 +309,6 @@ function calendar(year, month){
     const period = periodOfMonth(year, month);
     
     date.setFullYear(year, month-1, 1);
-
-
 
     const html = `
     <div class="container-xl text-center calender">
@@ -364,10 +338,9 @@ function calendar(year, month){
 
     `;
 
-
     return html; // 시작을 인덱스 5번부터 하면됨!!! 그럼 배열로 구현하면 되려남...
 }
 
-export {
+module.exports = {
     calendar
 }

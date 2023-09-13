@@ -1,33 +1,22 @@
-/*
 const http = require('http'); // 아직 잘 모르겠음
 const fs = require('fs'); // 파일 시스템 모듈을 사용할때 필요함
 const url = require('url'); // url 모듈을 가져옴
 const qs = require('querystring');
 const template = require('./lib/template.js');
 const data = require('./lib/dataCRUD.js');
-const cal = require('./lib/calendar.js');
-*/
+const cd = require('./lib/calendar.js');
 
-import * as http from 'http';
-import * as fs from 'fs';
-import * as url from 'url';
+
+/*
+import http from 'http';
+import fs from 'fs';
+import url from 'url';
 import * as qs from 'querystring';
 
-import * as temaplate from './lib/template';
+//import * as temaplate from './lib/template';
 import * as cd from './lib/calendar';
 import * as data from './lib/dataCRUD';
-
-
-async function longTask() {
-
-}
-
-
-async function main() {
-  const whatIWant = await longTask();
-
-}
-
+*/
 
 
 const server = http.createServer(async function(request, response){
@@ -70,7 +59,7 @@ const server = http.createServer(async function(request, response){
         </head>
         <body>
           <div class="container">
-              ${cal.calendar(2023,11)}
+              ${cd.calendar(2023,11)}
           </div>
   
         
