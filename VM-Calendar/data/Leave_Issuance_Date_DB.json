@@ -1,0 +1,26 @@
+{
+    "outline": "성과제 외박 및 연가 카운트를 위한 날짜 데이터베이스",
+    "annualLeave": {
+        "Airman1st": {"DateOfIssuance": "2023-03-09", "leaves": 10},
+        "SeniorAirman": {"DateOfIssuance": "2023-09-09", "leaves": 8},
+        "StaffSergeant": {"DateOfIssuance": "2024-03-09", "leaves": 10}
+    },
+
+    "regularSleepover": {
+        "ord1": {"DateOfIssuance": "2023-03-31", "leaves": 3},
+        "ord2": {"DateOfIssuance": "2023-05-12", "leaves": 3},
+        "ord3": {"DateOfIssuance": "2023-06-23", "leaves": 3},
+        "ord4": {"DateOfIssuance": "2023-08-04", "leaves": 3},
+        "ord5": {"DateOfIssuance": "2023-09-15", "leaves": 3},
+        "ord6": {"DateOfIssuance": "2023-10-27", "leaves": 3},
+        "ord7": {"DateOfIssuance": "2023-12-08", "leaves": 3},
+        "ord8": {"DateOfIssuance": "2024-01-19", "leaves": 3},
+        "ord9": {"DateOfIssuance": "2024-03-01", "leaves": 3},
+        "ord10": {"DateOfIssuance": "2024-04-12", "leaves": 3},
+        "ord11": {"DateOfIssuance": "2024-05-24", "leaves": 3},
+        "ord12": {"DateOfIssuance": "2024-07-05", "leaves": 3},
+        "ord13": {"DateOfIssuance": "2024-08-16", "leaves": 3},
+        "ord14": {"DateOfIssuance": "2024-09-27", "leaves": 3},
+        "ord15": {"DateOfIssuance": "2024-10-01", "leaves": 1}
+    }
+}
