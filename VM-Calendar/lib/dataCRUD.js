@@ -1,5 +1,4 @@
 const fs = require('fs'); // 파일 시스템 모듈을 사용할때 필요함
-const { Module } = require('module');
 
 let data = [];
 
@@ -328,9 +327,7 @@ function removeTimeSchedule(year, month, day, schedule, title) {
 function insertWorkSchedule(year, month, day, work) {
 
     const thatDay = getDay(year, month, day);
-    let workAtThatDay = thatDay.work;
-
-    workAtThatDay = work;
+    thatDay.work = work;
 
     return;
 }

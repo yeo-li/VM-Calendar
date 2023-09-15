@@ -173,7 +173,7 @@ function printOneWeekWork(ord, year, month, days){
       if(today){
         day += `${today.work}</div>`;
       } else{
-        day += `NULL</div>`;
+        day += `empty</div>`;
       }
     }
     html += day;
