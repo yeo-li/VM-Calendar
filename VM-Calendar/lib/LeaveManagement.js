@@ -5,7 +5,7 @@ let DB = {};
  */
 async function loadFile() {
     const content = await new Promise((res, rej) => {
-        fs.readFile(`./data/Leave_Management_DB.json`, 'utf-8', function (err, data) {
+        fs.readFile(`./data/LeaveManagementDB.json`, 'utf-8', function (err, data) {
             if (err) {
                 rej(err);
             } else {
@@ -22,7 +22,7 @@ async function loadFile() {
  */
 async function saveFile() {
     await new Promise((res, rej) => {
-        fs.writeFile(`./data/Leave_Management_DB.json`, JSON.stringify(data), 'utf-8', function (err) {
+        fs.writeFile(`./data/LeaveManagementDB.json`, JSON.stringify(data), 'utf-8', function (err) {
             if (err) {
                 rej(err);
             } else {
