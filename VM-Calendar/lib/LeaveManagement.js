@@ -32,17 +32,6 @@ async function saveFile() {
     });
 }
 
-/**
- * 파일을 읽은 뒤 저장하는 기능이 필요할 때,
- * 필요 함수를 action에 삽입 후 위 함수를 실행시켜주는 method
- * @param {function} action 
- */
-async function withinFile(action) {
-    await loadFile();
-    await action();
-    await saveFile();
-}
-
 /*
 만들어야 할 것
 1. 획득 휴가 분야별로 카운트하기(성과제,연가 / 위로,포상,청원)
@@ -54,7 +43,7 @@ async function withinFile(action) {
 */
 
 // 획득 휴가를 반환하는 methods
-const getScheduledLeaveCountToDate = function(){
+const getScheduledLeaveDays = function(){
     const scheduledLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "scheduledLeave");
     const today = new Date();
     let totalLeaveDays = 0;
@@ -68,7 +57,7 @@ const getScheduledLeaveCountToDate = function(){
     return totalLeaveDays;
 }
 
-const getAnnaulLeaveCountToDate = function(){
+const getAnnaulLeaveDays = function(){
     const annaulLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "annaulLeave");
     const today = new Date();
     let totalLeaveDays = 0;
@@ -82,7 +71,7 @@ const getAnnaulLeaveCountToDate = function(){
     return totalLeaveDays;
 }
 
-const getStressManagementLeaveCountToDate = function(){
+const getStressManagementLeaveDays = function(){
     const stressManagementLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "stressManagementLeave");
     let totalLeaveDays = 0;
 
@@ -93,7 +82,7 @@ const getStressManagementLeaveCountToDate = function(){
     return totalLeaveDays;
 }
 
-const getIncentiveLeaveCountToDate = function(){
+const getIncentiveLeaveDays = function(){
     const incentiveLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "incentiveLeave");
     let totalLeaveDays = 0;
 
@@ -104,7 +93,7 @@ const getIncentiveLeaveCountToDate = function(){
     return totalLeaveDays;
 }
 
-const getPetitionLeaveCountToDate = function(){
+const getPetitionLeaveDays = function(){
     const petitionLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "petitionLeave");
     let totalLeaveDays = 0;
 
@@ -115,31 +104,31 @@ const getPetitionLeaveCountToDate = function(){
     return totalLeaveDays;
 }
 
-const getTotalLeaveCountToDate = function(){
+const getTotalLeaveDays = function(){
     let totalLeaveDays = 0;
 
-    totalLeaveDays += getAnnaulLeaveCountToDate();
-    totalLeaveDays += getIncentiveLeaveCountToDate();
-    totalLeaveDays += getScheduledLeaveCountToDate();
-    totalLeaveDays += getPetitionLeaveCountToDate();
-    totalLeaveDays += getStressManagementLeaveCountToDate();
+    totalLeaveDays += getAnnaulLeaveDays();
+    totalLeaveDays += getIncentiveLeaveDays();
+    totalLeaveDays += getScheduledLeaveDays();
+    totalLeaveDays += getPetitionLeaveDays();
+    totalLeaveDays += getStressManagementLeaveDays();
 
     return totalLeaveDays;
 }
 
-const getAccruedLeaveCountToDate = function(classification){
+const getAccruedLeaveDays = function(classification){
 
     switch(classification){
         case "scheduledLeave":
-            return getScheduledLeaveCountToDate();
+            return getScheduledLeaveDays();
         case "annaulLeave":
-            return getAnnaulLeaveCountToDate();
+            return getAnnaulLeaveDays();
         case "stressManagementLeave":
-            return getStressManagementLeaveCountToDate();
+            return getStressManagementLeaveDays();
         case "incentiveLeave":
-            return getIncentiveLeaveCountToDate();
+            return getIncentiveLeaveDays();
         case "petitionLeave":
-            return getPetitionLeaveCountToDate();
+            return getPetitionLeaveDays();
     }
 
     console.warn("입력하신 구분이 없습니다.");
@@ -214,4 +203,15 @@ const getRamainingLeaveDays = function(classification){
     const remainingLeaveDays = accruedLeaveDays - takenLeaveDays;
 
     return remainingLeaveDays;
+}
+
+module.exports = {
+    loadFile,
+    saveFile,
+    getAccruedLeaveDays,
+    getTakenLeaveDays,
+    insertLeaveDaysToDB,
+    deductTakenLeaveDaysToDB,
+    removeAccruedLeaveDaysToDB,
+    getRamainingLeaveDays
 }
