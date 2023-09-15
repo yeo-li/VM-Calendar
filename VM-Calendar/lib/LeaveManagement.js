@@ -104,7 +104,7 @@ const getPetitionLeaveDays = function(){
     return totalLeaveDays;
 }
 
-const getTotalLeaveDays = function(){
+const getTotalAccruedLeaveDays = function(){
     let totalLeaveDays = 0;
 
     totalLeaveDays += getAnnaulLeaveDays();
@@ -209,7 +209,9 @@ module.exports = {
     loadFile,
     saveFile,
     getAccruedLeaveDays,
+    getTotalAccruedLeaveDays,
     getTakenLeaveDays,
+    getTotalTakenLeaveDays,
     insertLeaveDaysToDB,
     deductTakenLeaveDaysToDB,
     removeAccruedLeaveDaysToDB,
