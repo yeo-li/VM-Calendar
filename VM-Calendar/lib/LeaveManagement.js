@@ -40,7 +40,8 @@ async function saveFile() {
 4. 
 */
 
-const getPerformanceLeaveCountToDate = function(){
+// 획득 휴가를 반환하는 methods
+const getScheduledLeaveCountToDate = function(){
     const scheduledLeaves = leaveDB.aboutaccruedLeaveDays.find(e => e.classification === "scheduledLeave");
     const today = new Date();
     let totalLeaveDays = 0;
@@ -106,10 +107,29 @@ const getTotalLeaveCountToDate = function(){
 
     totalLeaveDays += getAnnaulLeaveCountToDate();
     totalLeaveDays += getIncentiveLeaveCountToDate();
-    totalLeaveDays += getPerformanceLeaveCountToDate();
+    totalLeaveDays += getScheduledLeaveCountToDate();
     totalLeaveDays += getPetitionLeaveCountToDate();
     totalLeaveDays += getStressManagementLeaveCountToDate();
 
     return totalLeaveDays;
+}
+
+// 사용 휴가를 반환하는 methods
+const getTakenLeaveDays = function(classification){
+    const TakenLeaves = leaveDB.aboutTakenLeaveDays.find(e => e.classification === classification);
+    
+    return TakenLeaves.days;
+}
+
+const getTotalTakenLeaveDays = function(){
+    let totalTakenLeaves = 0;
+
+    totalTakenLeaves += getTakenLeaveDays("scheduledLeave");
+    totalTakenLeaves += getTakenLeaveDays("annaulLeave");
+    totalTakenLeaves += getTakenLeaveDays("stressManagementLeave");
+    totalTakenLeaves += getTakenLeaveDays("incentiveLeave");
+    totalTakenLeaves += getTakenLeaveDays("petitionLeave");
+
+    return totalTakenLeaves;
 }
 

@@ -111,23 +111,23 @@
 
     "aboutTakenLeaveDays": [
         {
-            "classification": "정기 외박",
+            "classification": "scheduledLeave",
             "days": 12
         },
         {
-            "classification": "위로",
+            "classification": "stressManagementLeave",
             "days": 4
         },
         {
-            "classification": "포상",
+            "classification": "incentiveLeave",
             "days": 0
         },
         {
-            "classification": "연가",
+            "classification": "annaulLeave",
             "days": 10
         },
         {
-            "classification": "청원",
+            "classification": "petitionLeave",
             "days": 0
         }
     ]
