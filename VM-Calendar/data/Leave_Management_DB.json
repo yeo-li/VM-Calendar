@@ -1,134 +1,134 @@
 {
-    "aboutLeave": [
+    "aboutAccruedLeaveDays": [
         {
-            "classification": "위로",
+            "classification": "stressManagementLeave",
             "details": [
                 {
                     "name": "신병 위로휴가",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "name": "대민지원 차출",
-                    "leaves": 1
+                    "days": 1
                 },
                 {
                     "name": "대대복구 차출",
-                    "leaves": 1
+                    "days": 1
                 }
             ]
         },
         {
-            "classification": "포상",
+            "classification": "incentiveLeave",
             "details": []
         },
         {
-            "classification": "청원",
+            "classification": "petitionLeave",
             "details": []
         },
         {
-            "classification": "정기 외박",
+            "classification": "scheduledLeave",
             "details": [
                 {
                     "DateOfIssuance": "2023-03-31",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2023-05-12",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2023-06-23",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2023-08-04",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2023-09-15",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2023-10-27",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2023-12-08",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2024-01-19",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2024-03-01",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2024-04-12",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2024-05-24",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2024-07-05",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2024-08-16",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2024-09-27",
-                    "leaves": 3
+                    "days": 3
                 },
                 {
                     "DateOfIssuance": "2024-10-01",
-                    "leaves": 1
+                    "days": 1
                 }
             ]
         },
         {
-            "classification": "연가",
+            "classification": "annaulLeave",
             "details": [
                 {
                     "DateOfIssuance": "2023-03-09",
-                    "leaves": 10
+                    "days": 10
                 },
                 {
                     "DateOfIssuance": "2023-09-09",
-                    "leaves": 8
+                    "days": 8
                 },
                 {
                     "DateOfIssuance": "2024-03-09",
-                    "leaves": 10
+                    "days": 10
                 }
             ]
         }
     ],
 
-    "aboutUsedLeave": [
+    "aboutTakenLeaveDays": [
         {
             "classification": "정기 외박",
-            "usedLeaves": 12
+            "days": 12
         },
         {
             "classification": "위로",
-            "usedLeaves": 4
+            "days": 4
         },
         {
             "classification": "포상",
-            "usedLeaves": 0
+            "days": 0
         },
         {
             "classification": "연가",
-            "usedLeaves": 10
+            "days": 10
         },
         {
             "classification": "청원",
-            "usedLeaves": 0
+            "days": 0
         }
     ]
 }
