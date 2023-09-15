@@ -108,10 +108,27 @@
             ]
         }
     ],
+
     "aboutUsedLeave": [
         {
             "classification": "정기 외박",
             "usedLeaves": 12
+        },
+        {
+            "classification": "위로",
+            "usedLeaves": 4
+        },
+        {
+            "classification": "포상",
+            "usedLeaves": 0
+        },
+        {
+            "classification": "연가",
+            "usedLeaves": 10
+        },
+        {
+            "classification": "청원",
+            "usedLeaves": 0
         }
     ]
 }
