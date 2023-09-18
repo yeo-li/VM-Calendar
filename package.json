@@ -1,0 +1,27 @@
+{
+  "name": "vm-calendar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "type": "module",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeo-li/VM-Calendar.git"
+  },
+  "author": "Park, Seong-yeol",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yeo-li/VM-Calendar/issues"
+  },
+  "homepage": "https://github.com/yeo-li/VM-Calendar#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
