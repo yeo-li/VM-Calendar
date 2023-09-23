@@ -1,17 +1,69 @@
 import http  from 'http' // 아직 잘 모르겠음
 import fs from 'fs' // 파일 시스템 모듈을 사용할때 필요함
-import url from 'url' // url 모듈을 가져옴
+import * as url from 'url' // url 모듈을 가져옴
 import qs from 'querystring'
-import * as dataFactory from './routes/dataCRUD.js'
+import * as template from './routes/template.js'
+import * as data from './routes/dataCRUD.js'
 import calendar from './routes/calendar.js'
-import * as lm from './routes/LeaveManagement.js'
-import express from 'express'
+import * as LM from './routes/LeaveManagement.js'
+import express, {response} from 'express'
 
 const app = express();
 const port = 3000;
 
-app.get('/', (request, response) => {
-  response.send('Hello Express.js!');
+/*
+  기본 pathname에 들어왔을 때 로직
+  현재 날짜를 받고 오늘시달력을 표시 함
+  나머지는 달력과 관계 없으므로 그냥 다 표시가기
+  필수적으로 표시해야 할 정보: 달력, 휴가관리표(성과제 외박 발급 표, 획득/사용/잔여 휴가 표시 표)
+  달력과 휴가관리표는 어떻게 수정할 것인지?
+
+  페이지에서 수정 버튼을 눌러 수정 페이지로 간다 -> 수정한다 -> 저장한다 ->  저장된다. >> 채택
+
+  항상 같은 것: 휴가 사용표 및 성과제 외박 발급표 -> 미들웨어
+  추가적으로 필요한 것: express.js 사용법, npm 사용법
+*/
+
+app.get('/', (req, res) => {
+  // 현재 날짜를 구한 뒤 현재 날짜의 달력을 출력함 or year과 month, day를 보냄
+  const today = new Date();
+  const nowYear = today.getFullYear();
+  const nowMonth = today.getMonth() + 1;
+  const nowDay = today.getDate();
+
+  //res.send('/: Completed');
+  res.redirect(`/VMC/${nowYear}/${nowMonth}/${nowDay}`);
+});
+app.get('/VMC/:year/:month/:day', (req, res) => {
+
+
+  res.send(template.main(req.params.year, req.params.month, req.url));
+});
+
+app.get('/VMC/:year/:month/:day/next_process', (req, res) => {
+  let newMonth = Number(req.params.month) + 1;
+  let newYear = req.params.year;
+  let newDay = req.params.day;
+
+  if(newMonth > 12){
+    newYear = Number(newYear) + 1;
+    newMonth -= 12;
+  }
+
+  res.redirect(`/VMC/${newYear}/${newMonth}/${newDay}`);
+});
+
+app.get('/VMC/:year/:month/:day/prev_process', (req, res) => {
+  let newMonth = req.params.month - 1;
+  let newYear = req.params.year;
+  let newDay = req.params.day;
+
+  if(newMonth < 1){
+    newYear = Number(newYear) - 1;
+    newMonth += 12;
+  }
+
+  res.redirect(`/VMC/${newYear}/${newMonth}/${newDay}`);
 });
 
 app.listen(port, () => {
@@ -19,7 +71,7 @@ app.listen(port, () => {
 })
 
 
-
+//req.params
 
 
 /*
@@ -73,18 +125,6 @@ const server = http.createServer(async function(request, response){
     const pathname = url.parse(URL, true).pathname; // url의 pathname을 가져옴
 
     if(pathname === '/'){
-      /*
-        기본 pathname에 들어왔을 때 로직
-        현재 날짜를 받고 오늘시달력을 표시함
-        나머지는 달력과 관계 없으므로 구냥 다 표시가기
-        필수적으로 표시해야 할 정보: 달력, 휴가관리표(성과제 외박 발급 표, 획득/사용/잔여 휴가 표시 표)
-        달력과 휴가관리표는 어떻게 수정할 것인지?
-        1. 페이지에서 직접 수정을 한다 -> 저장 버튼을 누른다 -> 저장된다. >> 보안상 이슈로 탈락
-        2. 페이지에서 수정 버튼을 눌러 수정 페이지로 간다 -> 수정한다 -> 저장한다 ->  저장된다. >> 채택
-
-        항상 같은 것: 휴가 사용표 및 성과제 외박 발급표 -> 미들웨어
-
-        추가적으로 필요한 것: express.js 사용법, npm 사용법, 
       
 
       

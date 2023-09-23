@@ -19,6 +19,7 @@ async function loadFile() {
   });
 
   data = JSON.parse(content);
+
 }
 
 /**
@@ -103,22 +104,25 @@ function periodOfMonth(year, month){
   const thirty = [4, 6, 9, 11];
   let result = 0;
 
-  if(month === 2){
+  if(month == 2){
     if(isLeapYear(year, month)){
       result =  29;
     } else{
       result = 28;
     }
   } else {
-    thirty.forEach(function(value){
-      if(month === value){
+    for(const day of thirty){
+      if(day == month){
         result = 30;
+        break;
       }
-    });
+    }
   }
-  if(result === 0){
+  if(result == 0){
     result = 31;
   }
+
+
 
   return result;
 }
@@ -158,15 +162,17 @@ function printOneWeekDay(ord, days){
  */
 function printOneWeekWork(ord, year, month, days){
   let html = ``;
-  loadFile();
+  //loadFile();
 
-  const theMonthDays = getMonth(year, month).days;
+
+  const theMonthDays = getMonth(year, month);
 
   for(let i = 0; i < 7 ; i++){
-    const today = theMonthDays.find(e => e.day === days[ord][i]);
+    const today = theMonthDays.days.find(e => e.day === days[ord][i]);
+
     let day = `<div class="col d${i}">`;
 
-    if(today === 0){ // today가 저번달 혹은 다음달이라면 공백 추가하기
+    if(today == 0){ // today가 저번달 혹은 다음달이라면 공백 추가하기
       day += `&nbsp;</div>`;
     } else{
 
@@ -302,12 +308,11 @@ function printWeeks(year, month){
  * @param {number} month 
  * @returns 달력 html을 반환
  */
-export default function calendar(year, month){
+export default function calendar(year, month, url){
     // 1,3,5,7,8,10,12: 31일 2,4,6,9,11: 30일 2:28일or29일
 
     const date = new Date();
     const period = periodOfMonth(year, month);
-    
     date.setFullYear(year, month-1, 1);
 
     const html = `
@@ -315,9 +320,9 @@ export default function calendar(year, month){
     <div class="row">
         <div class="col">
             <div class="row header">
-                <a class="btn col prevDay">prev</a>
+                <a class="btn col prevDay" href=${url}/prev_process>prev</a>
                 <div class="col dataTitle">${calendarTitle(year, month)}</div>
-                <a class="btn col nextDay">next</a>
+                <a class="btn col nextDay" href=${url}/next_process>next</a>
             </div>
     
             <div class="row">
@@ -335,6 +340,7 @@ export default function calendar(year, month){
         </div>
     </div>
 </div>
+
 
     `;
 

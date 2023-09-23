@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 let DB = {};
 
 /**
@@ -43,7 +45,11 @@ async function saveFile() {
 */
 
 // 획득 휴가를 반환하는 methods
-const getScheduledLeaveDays = function(){
+/**
+ * 성과제 외박을 현재 날짜로부터 몇일을 받았는지 반환하는 method
+ * @returns {number}
+ */
+function getScheduledLeaveDays(){
     const scheduledLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "scheduledLeave");
     const today = new Date();
     let totalLeaveDays = 0;
@@ -57,12 +63,16 @@ const getScheduledLeaveDays = function(){
     return totalLeaveDays;
 }
 
-const getAnnaulLeaveDays = function(){
+/**
+ * 연가를 현재 날짜로부터 몇일을 받았는지 반환하는 method
+ * @returns {number}
+ */
+function getAnnaulLeaveDays(){
     const annaulLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "annaulLeave");
     const today = new Date();
     let totalLeaveDays = 0;
 
-    for(const leave of annaulLeave.details){
+    for(const leave of annaulLeaves.details){
         if(leave.DateOfIssuance <= today){
             totalLeaveDays += leave.days;
         }
@@ -71,7 +81,11 @@ const getAnnaulLeaveDays = function(){
     return totalLeaveDays;
 }
 
-const getStressManagementLeaveDays = function(){
+/**
+ * 위로 휴가를 현재 날짜로부터 몇일을 받았는지 반환하는 method
+ * @returns {number}
+ */
+function getStressManagementLeaveDays(){
     const stressManagementLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "stressManagementLeave");
     let totalLeaveDays = 0;
 
@@ -82,7 +96,11 @@ const getStressManagementLeaveDays = function(){
     return totalLeaveDays;
 }
 
-const getIncentiveLeaveDays = function(){
+/**
+ *
+ * @returns {number}
+ */
+function getIncentiveLeaveDays(){
     const incentiveLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "incentiveLeave");
     let totalLeaveDays = 0;
 
@@ -93,7 +111,7 @@ const getIncentiveLeaveDays = function(){
     return totalLeaveDays;
 }
 
-const getPetitionLeaveDays = function(){
+function getPetitionLeaveDays(){
     const petitionLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === "petitionLeave");
     let totalLeaveDays = 0;
 
@@ -104,7 +122,7 @@ const getPetitionLeaveDays = function(){
     return totalLeaveDays;
 }
 
-const getTotalAccruedLeaveDays = function(){
+function getTotalAccruedLeaveDays(){
     let totalLeaveDays = 0;
 
     totalLeaveDays += getAnnaulLeaveDays();
@@ -116,7 +134,7 @@ const getTotalAccruedLeaveDays = function(){
     return totalLeaveDays;
 }
 
-const getAccruedLeaveDays = function(classification){
+function getAccruedLeaveDays(classification){
 
     switch(classification){
         case "scheduledLeave":
@@ -137,13 +155,13 @@ const getAccruedLeaveDays = function(classification){
 
 
 // 사용 휴가를 반환하는 methods
-const getTakenLeaveDays = function(classification){
+function getTakenLeaveDays(classification){
     const takenLeaves = DB.aboutTakenLeaveDays.find(e => e.classification === classification);
     
     return takenLeaves.days;
 }
 
-const getTotalTakenLeaveDays = function(){
+function getTotalTakenLeaveDays(){
     let totalTakenLeaves = 0;
 
     totalTakenLeaves += getTakenLeaveDays("scheduledLeave");
@@ -158,7 +176,7 @@ const getTotalTakenLeaveDays = function(){
 
 // 위로, 포상, 청원 휴가 DB에 추가하는 methods
 
-export function createLeaveObject(classification, name, days){
+function createLeaveObject(classification, name, days){
     return {
         classification,
         name,
@@ -166,7 +184,7 @@ export function createLeaveObject(classification, name, days){
     };
 }
 
-const insertLeaveDaysToDB = function(classification, leaveName, leaveDays){
+function insertLeaveDaysToDB(classification, leaveName, leaveDays){
     if(classification === "scheduledLeave" || classification === "annaulLeave"){
         console.warn("이 구분에는 휴가를 추가 할 수 없습니다.");
         return false;
@@ -178,14 +196,14 @@ const insertLeaveDaysToDB = function(classification, leaveName, leaveDays){
 }
 
 // 휴가 차감 method
-const deductTakenLeaveDaysToDB = function(classification){
+function deductTakenLeaveDaysToDB(classification){
     let takenLeaves = DB.aboutTakenLeaveDays.find(e => e.classification === classification);
     takenLeaves.days += 1;
     return true;
 }
 
 // 위로, 포상, 청원 휴가 삭제 method
-const removeAccruedLeaveDaysToDB = function(classification, leaveName){
+function removeAccruedLeaveDaysToDB(classification, leaveName){
     if(classification === "scheduledLeave" || classification === "annaulLeave"){
         console.warn("이 구분은 휴가를 삭제 할 수 없습니다.");
         return false;
@@ -197,7 +215,7 @@ const removeAccruedLeaveDaysToDB = function(classification, leaveName){
 }
 
 // 잔여 휴가를 반환 하는 metnod
-const getRamainingLeaveDays = function(classification){
+function getRemainingLeaveDays(classification){
     const accruedLeaveDays = getAccruedLeaveDays(classification);
     const takenLeaveDays = getTakenLeaveDays(classification);
     const remainingLeaveDays = accruedLeaveDays - takenLeaveDays;
@@ -220,5 +238,5 @@ export {
     deductTakenLeaveDaysToDB,
     removeAccruedLeaveDaysToDB,
 
-    getRamainingLeaveDays
+    getRemainingLeaveDays
 }

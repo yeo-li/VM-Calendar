@@ -16,6 +16,7 @@ async function loadFile() {
         });
     });
 
+
     data = JSON.parse(content);
 }
 
@@ -44,7 +45,6 @@ async function withinFile(action) {
     await action();
     await saveFile();
 }
-
 
 /**
  * 필요한 년도의 json 데이터를 읽기 및 생성하는 method
@@ -111,8 +111,6 @@ function getDay(year, month, day) {
 
     return thatDay;
 }
-
-
 
 /**
  * 소일정(time schedule)을 생성한 뒤 반환하는 method
