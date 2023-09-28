@@ -4,7 +4,7 @@ import * as url from 'url' // url 모듈을 가져옴
 import qs from 'querystring'
 import * as template from './routes/template.js'
 import * as data from './routes/dataCRUD.js'
-import calendar from './routes/calendar.js'
+import renderCalendar from './routes/calendar.js'
 import * as LM from './routes/LeaveManagement.js'
 import express, {response} from 'express'
 
@@ -34,10 +34,11 @@ app.get('/', (req, res) => {
   //res.send('/: Completed');
   res.redirect(`/VMC/${nowYear}/${nowMonth}/${nowDay}`);
 });
-app.get('/VMC/:year/:month/:day', (req, res) => {
+app.get('/VMC/:year/:month/:day', async (req, res) => {
+  const year = Number.parseInt(req.params.year);
+  const month = Number.parseInt(req.params.month);
 
-
-  res.send(template.main(req.params.year, req.params.month, req.url));
+  res.send(await template.main(year, month, req.url));
 });
 
 app.get('/VMC/:year/:month/:day/next_process', (req, res) => {
@@ -71,7 +72,6 @@ app.listen(port, () => {
 })
 
 
-//req.params
 
 
 /*

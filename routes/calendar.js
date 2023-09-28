@@ -22,6 +22,29 @@ async function loadFile() {
 
 }
 
+async function saveFile() {
+  await new Promise((res, rej) => {
+    fs.writeFile(`./data/file.json`, JSON.stringify(data), 'utf-8', function (err) {
+      if (err) {
+        rej(err);
+      } else {
+        res(data);
+      }
+    });
+  });
+}
+
+/**
+ * 파일을 읽은 뒤 저장하는 기능이 필요할 때,
+ * 필요 함수를 action에 삽입 후 위 함수를 실행시켜주는 method
+ * @param {function} action
+ */
+async function withinFile(action) {
+  await loadFile();
+  const resultPromise = await action();
+  console.log('withinFile: ' + typeof(resultPromise));
+}
+
 /**
  * 필요한 년도의 json 데이터를 읽기 및 생성하는 method
  * @param {number} year 
@@ -162,13 +185,13 @@ function printOneWeekDay(ord, days){
  */
 function printOneWeekWork(ord, year, month, days){
   let html = ``;
-  //loadFile();
-
 
   const theMonthDays = getMonth(year, month);
 
+
   for(let i = 0; i < 7 ; i++){
     const today = theMonthDays.days.find(e => e.day === days[ord][i]);
+
 
     let day = `<div class="col d${i}">`;
 
@@ -199,7 +222,6 @@ function printOneWeekWork(ord, year, month, days){
 function printOneWeekSchedule(ord, year, month, days){
   let html = ``;
 
-  loadFile();
 
   const theMonthDays = getMonth(year, month).days;
 
@@ -214,7 +236,7 @@ function printOneWeekSchedule(ord, year, month, days){
       if(today != undefined){
         if(today.schedule.length > 0){
           for(let j = 0; j < today.schedule.length; j++){
-            day += `<div class="btn"><font size=2>${today.schedule[j].title}</font></div>`;
+            day += `<div class="btn">${today.schedule[j].title}</div>`;
           }
         } else{
           const empty = `<div class="null">&nbsp;</div><div class="null">&nbsp;</div>`;
@@ -308,14 +330,14 @@ function printWeeks(year, month){
  * @param {number} month 
  * @returns 달력 html을 반환
  */
-export default function calendar(year, month, url){
+export default async function renderCalendar(year, month, url){
     // 1,3,5,7,8,10,12: 31일 2,4,6,9,11: 30일 2:28일or29일
+  await loadFile();
+  const date = new Date();
+  const period = periodOfMonth(year, month);
+  date.setFullYear(year, month-1, 1);
 
-    const date = new Date();
-    const period = periodOfMonth(year, month);
-    date.setFullYear(year, month-1, 1);
-
-    const html = `
+  return `
     <div class="container-xl text-center calender">
     <div class="row">
         <div class="col">
@@ -343,6 +365,4 @@ export default function calendar(year, month, url){
 
 
     `;
-
-    return html; // 시작을 인덱스 5번부터 하면됨!!! 그럼 배열로 구현하면 되려남...
 }

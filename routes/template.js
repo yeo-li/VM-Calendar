@@ -1,7 +1,9 @@
-import calendar from './calendar.js';
+import renderCalendar from './calendar.js';
 
-export function main(year, month, url){
-    const mainHomeHTML = `
+export async function main(year, month, url){
+    const rendered = await renderCalendar(year, month, url);
+
+    return `
     <!doctype html>
     <html lang="en">
       <head>
@@ -30,7 +32,7 @@ export function main(year, month, url){
       </head>
       <body>
         <div class="container">
-            ${calendar(year,month, url)}
+            ${rendered}
         </div>
   
       
@@ -41,7 +43,5 @@ export function main(year, month, url){
       </body>
     </html>
     `;
-  
-    return mainHomeHTML;
   }
 
