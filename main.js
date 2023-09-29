@@ -7,6 +7,7 @@ import * as data from './routes/dataCRUD.js'
 import renderCalendar from './routes/calendar.js'
 import * as LM from './routes/LeaveManagement.js'
 import express, {response} from 'express'
+import * as calendar from './routes/allNewCalendar.js';
 
 const app = express();
 const port = 3000;
@@ -46,11 +47,17 @@ app.get('/VMC/:year/:month/:day', async (req, res) => {
 
 // todo 원하는 날짜에 근무표 저장 한 뒤 메인 페이지로 이동하는 로직 짜기
 app.post('/update_calendar', async (req, res) => {
-  console.log(req.body);
   const workSchedule = req.body;
 
   for(let key in workSchedule){
+    const date = await new Date(key);
+    const year = await date.getFullYear();
+    const month = await date.getMonth()+1;
+    const day = await date.getDate();
 
+    await calendar.withinFile(()=> {
+      return calendar.insertWorkSchedule(year, month, day, workSchedule[key]);
+    });
   }
 
   res.redirect('/');
@@ -82,7 +89,8 @@ app.get('/VMC/:year/:month/:day/prev_process', (req, res) => {
 });
 
 
-app.get('/update_takenLeaves', async (req, res) => {
+app.get('/update_takenLeaves', async (req, res) =>
+{
   const queryString = req.query;
 
   for(let key in queryString){
@@ -95,11 +103,6 @@ app.get('/update_takenLeaves', async (req, res) => {
   res.redirect(`/`);
 });
 
-
-app.get('/update_calendar', async (req, res) => {
-
-  res.send(await template.updateMain(year, month, req.url));
-});
 
 
 

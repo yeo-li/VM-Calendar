@@ -25,7 +25,7 @@ async function loadFile() {
  */
 async function saveFile() {
     await new Promise((res, rej) => {
-        fs.writeFile(`./data/file.json`, JSON.stringify(data), 'utf-8', function (err) {
+        fs.writeFile(`./data/file.json`, JSON.stringify(data, null, 2), 'utf-8', function (err) {
             if (err) {
                 rej(err);
             } else {

@@ -16,7 +16,7 @@ async function loadFile() {
     data = JSON.parse(content);
 }
 
-async function saveFile() {
+export async function saveFile() {
     await new Promise((res, rej) => {
         fs.writeFile(path, JSON.stringify(data, null, 2), 'utf-8', function (err) {
             if (err) {
@@ -28,7 +28,16 @@ async function saveFile() {
     });
 }
 
-async function withinFile(action) {
+
+export function insertWorkSchedule(year, month, day, work) {
+
+    const thatDay = getDay2DB(year, month, day);
+    thatDay.work = work;
+
+    return;
+}
+
+export async function withinFile(action) {
     await loadFile();
     const result = await action();
     //console.log('withinFile: ' + typeof(resultPromise));
@@ -113,7 +122,7 @@ function rendOneDay(date){ // YYYY-MM-DD
             <td>
                 <a href="#"><div>${date.getDate()}</div></a>
                 <hr>
-                <div><input type="text" value="${getWorkSchedule(date)}" name="${year}-${month}-${day}"></div>
+                <div><input type="text" value="${getWorkSchedule(date)}" name="${year}/${month}/${day}" style="width: 27px"></div>
             </td>
     `
 }
@@ -148,15 +157,15 @@ async function rendOneWeek(startDate){ // startDate: Date Object
 export default async function rendCalendar(year, month, date){
     let html =
         `<form action="/update_calendar" method="post">
-<table border="1">
+<table border="1" align="center">
         <thead>
+            <th>일</th>
             <th>월</th>
             <th>화</th>
             <th>수</th>
             <th>목</th>
             <th>금</th>
             <th>토</th>
-            <th>일</th>
         </thead>
         <tbody>
 `;
@@ -167,8 +176,7 @@ export default async function rendCalendar(year, month, date){
         day += await (7 - new Date(`${year}-${month}-${day}`).getDay());
     }
 
-    html += `</tbody>
-<input type="submit">
+    html += `</tbody></<table> <input type="submit">
 </form>`;
 
     return html;
