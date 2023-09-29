@@ -1,6 +1,7 @@
 import http  from 'http' // 아직 잘 모르겠음
 import fs from 'fs' // 파일 시스템 모듈을 사용할때 필요함
 import * as url from 'url' // url 모듈을 가져옴
+import bodyParser from "body-parser";
 import * as template from './routes/template.js'
 import * as data from './routes/dataCRUD.js'
 import renderCalendar from './routes/calendar.js'
@@ -23,6 +24,9 @@ const port = 3000;
   추가적으로 필요한 것: express.js 사용법, npm 사용법
 */
 
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
 app.get('/', (req, res) => {
   // 현재 날짜를 구한 뒤 현재 날짜의 달력을 출력함 or year과 month, day를 보냄
   const today = new Date();
@@ -40,6 +44,17 @@ app.get('/VMC/:year/:month/:day', async (req, res) => {
   res.send(await template.main(year, month, req.url));
 });
 
+// todo 원하는 날짜에 근무표 저장 한 뒤 메인 페이지로 이동하는 로직 짜기
+app.post('/update_calendar', async (req, res) => {
+  console.log(req.body);
+  const workSchedule = req.body;
+
+  for(let key in workSchedule){
+
+  }
+
+  res.redirect('/');
+});
 
 app.get('/VMC/:year/:month/:day/next_process', (req, res) => {
   let newMonth = Number(req.params.month) + 1;
@@ -83,7 +98,10 @@ app.get('/update_takenLeaves', async (req, res) => {
 
 app.get('/update_calendar', async (req, res) => {
 
+  res.send(await template.updateMain(year, month, req.url));
 });
+
+
 
 app.listen(port, () => {
   console.log('서버가 실행됩니다.(port: 3000)');

@@ -1,8 +1,9 @@
 import renderCalendar from './calendar.js';
 import * as renderLeave from './LeaveManagement.js';
+import rendCalendar from "./allNewCalendar.js";
 
 export async function main(year, month, url){
-    const rendered = await renderCalendar(year, month, url);
+    const rendered = await rendCalendar(year, month, 1);
     const renderedLeaveTable = await leaveTable();
 
     return `
@@ -12,7 +13,7 @@ export async function main(year, month, url){
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Calender</title>
-  
+        <!--
         <style>
         div {
             border: 1px solid rgb(39, 131, 39);
@@ -24,10 +25,12 @@ export async function main(year, month, url){
             border: 1px solid rgb(39, 131, 39);
             align-content: center;
         }
+        
   
         div.null {
           border: 0px;
         }
+        -->
     </style>
   
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -109,4 +112,8 @@ async function leaveTable() {
     </form>
 
     `
+}
+
+export async function updateMain(year, month, url){
+
 }
