@@ -1,7 +1,9 @@
 import renderCalendar from './calendar.js';
+import * as renderLeave from './LeaveManagement.js';
 
 export async function main(year, month, url){
     const rendered = await renderCalendar(year, month, url);
+    const renderedLeaveTable = await leaveTable();
 
     return `
     <!doctype html>
@@ -34,7 +36,10 @@ export async function main(year, month, url){
         <div class="container">
             ${rendered}
         </div>
-  
+        
+        <div class="leaveTable">
+            ${renderedLeaveTable}
+        </div>
       
                 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
@@ -43,5 +48,65 @@ export async function main(year, month, url){
       </body>
     </html>
     `;
-  }
+}
 
+async function leaveTable() {
+    await renderLeave.loadFile();
+
+
+    return `
+    <form action="/update_takenLeaves">
+        <table border="2" align="center">
+            <th>휴가</th>
+            <th>획득</th>
+            <th>사용</th>
+            <th>잔여</th>
+            <tr class="scheduledLeave">
+                <td>정기</td>
+                <td>${await renderLeave.getAccruedLeaveDays("scheduledLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${renderLeave.getTakenLeaveDays("scheduledLeave")} 
+                name="scheduledLeave"></td>
+                <td>${await renderLeave.getRemainingLeaveDays("scheduledLeave")}</td>
+            </tr>
+            <tr class="stressManagementLeave">
+                <td>위로</td>
+                <td>${await renderLeave.getAccruedLeaveDays("stressManagementLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${renderLeave.getTakenLeaveDays("stressManagementLeave")} 
+                name="stressManagementLeave"></td>
+                <td>${await renderLeave.getRemainingLeaveDays("stressManagementLeave")}</td>
+            </tr>
+            <tr class="incentiveLeave">
+                <td>포상</td>
+                <td>${await renderLeave.getAccruedLeaveDays("incentiveLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${await renderLeave.getTakenLeaveDays("incentiveLeave")} 
+                name="incentiveLeave"></td>
+                <td>${await renderLeave.getRemainingLeaveDays("incentiveLeave")}</td>
+            </tr>
+            <tr class="annualLeave">
+                <td>연가</td>
+                <td>${await renderLeave.getAccruedLeaveDays("annualLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${renderLeave.getTakenLeaveDays("annualLeave")} 
+                name="annualLeave"></td>
+                <td>${await renderLeave.getRemainingLeaveDays("annualLeave")}</td>
+            </tr>
+            <tr class="petitionLeave">
+                <td>청원</td>
+                <td>${await renderLeave.getAccruedLeaveDays("petitionLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${renderLeave.getTakenLeaveDays("petitionLeave")} 
+                name="petitionLeave"></td>
+                <td>${await renderLeave.getRemainingLeaveDays("petitionLeave")}</td>
+            </tr>
+            <tr>
+                <td>총합</td>
+                <td>${await renderLeave.getTotalAccruedLeaveDays()}</td>
+                <td>${await renderLeave.getTotalTakenLeaveDays()}</td>
+                <td>${await renderLeave.getTotalRemainingLeaveDays()}</td>
+            </tr>
+            
+        </table>
+
+        <input type="submit" value="save">
+    </form>
+
+    `
+}

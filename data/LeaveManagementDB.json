@@ -1,137 +1,137 @@
 {
-    "aboutAccruedLeaveDays": [
+  "aboutAccruedLeaveDays": [
+    {
+      "classification": "stressManagementLeave",
+      "details": [
         {
-            "classification": "stressManagementLeave",
-            "details": [
-                {
-                    "name": "신병 위로휴가",
-                    "days": 3
-                },
-                {
-                    "name": "대민지원 차출",
-                    "days": 1
-                },
-                {
-                    "name": "대대복구 차출",
-                    "days": 1
-                },
-                {
-                    "name": "크루근무자 위로휴가",
-                    "days": 14
-                }
-            ]
+          "name": "신병 위로휴가",
+          "days": 3
         },
         {
-            "classification": "incentiveLeave",
-            "details": []
+          "name": "대민지원 차출",
+          "days": 1
         },
         {
-            "classification": "petitionLeave",
-            "details": []
+          "name": "대대복구 차출",
+          "days": 1
         },
         {
-            "classification": "scheduledLeave",
-            "details": [
-                {
-                    "DateOfIssuance": "2023-03-31",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2023-05-12",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2023-06-23",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2023-08-04",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2023-09-15",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2023-10-27",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2023-12-08",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2024-01-19",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2024-03-01",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2024-04-12",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2024-05-24",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2024-07-05",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2024-08-16",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2024-09-27",
-                    "days": 3
-                },
-                {
-                    "DateOfIssuance": "2024-10-01",
-                    "days": 1
-                }
-            ]
-        },
-        {
-            "classification": "annualLeave",
-            "details": [
-                {
-                    "DateOfIssuance": "2023-03-09",
-                    "days": 10
-                },
-                {
-                    "DateOfIssuance": "2023-09-09",
-                    "days": 8
-                },
-                {
-                    "DateOfIssuance": "2024-03-09",
-                    "days": 10
-                }
-            ]
+          "name": "크루근무자 위로휴가",
+          "days": 14
         }
-    ],
-    "aboutTakenLeaveDays": [
+      ]
+    },
+    {
+      "classification": "incentiveLeave",
+      "details": []
+    },
+    {
+      "classification": "petitionLeave",
+      "details": []
+    },
+    {
+      "classification": "scheduledLeave",
+      "details": [
         {
-            "classification": "scheduledLeave",
-            "days": 15
+          "DateOfIssuance": "2023-03-31",
+          "days": 3
         },
         {
-            "classification": "stressManagementLeave",
-            "days": 5
+          "DateOfIssuance": "2023-05-12",
+          "days": 3
         },
         {
-            "classification": "incentiveLeave",
-            "days": 0
+          "DateOfIssuance": "2023-06-23",
+          "days": 3
         },
         {
-            "classification": "annualLeave",
-            "days": 12
+          "DateOfIssuance": "2023-08-04",
+          "days": 3
         },
         {
-            "classification": "petitionLeave",
-            "days": 0
+          "DateOfIssuance": "2023-09-15",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2023-10-27",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2023-12-08",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2024-01-19",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2024-03-01",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2024-04-12",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2024-05-24",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2024-07-05",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2024-08-16",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2024-09-27",
+          "days": 3
+        },
+        {
+          "DateOfIssuance": "2024-10-01",
+          "days": 1
         }
-    ]
+      ]
+    },
+    {
+      "classification": "annualLeave",
+      "details": [
+        {
+          "DateOfIssuance": "2023-03-09",
+          "days": 10
+        },
+        {
+          "DateOfIssuance": "2023-09-09",
+          "days": 8
+        },
+        {
+          "DateOfIssuance": "2024-03-09",
+          "days": 10
+        }
+      ]
+    }
+  ],
+  "aboutTakenLeaveDays": [
+    {
+      "classification": "scheduledLeave",
+      "days": 15
+    },
+    {
+      "classification": "stressManagementLeave",
+      "days": 6
+    },
+    {
+      "classification": "incentiveLeave",
+      "days": 0
+    },
+    {
+      "classification": "annualLeave",
+      "days": 12
+    },
+    {
+      "classification": "petitionLeave",
+      "days": 0
+    }
+  ]
 }

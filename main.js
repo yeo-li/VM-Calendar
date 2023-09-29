@@ -1,7 +1,6 @@
 import http  from 'http' // 아직 잘 모르겠음
 import fs from 'fs' // 파일 시스템 모듈을 사용할때 필요함
 import * as url from 'url' // url 모듈을 가져옴
-import qs from 'querystring'
 import * as template from './routes/template.js'
 import * as data from './routes/dataCRUD.js'
 import renderCalendar from './routes/calendar.js'
@@ -41,6 +40,7 @@ app.get('/VMC/:year/:month/:day', async (req, res) => {
   res.send(await template.main(year, month, req.url));
 });
 
+
 app.get('/VMC/:year/:month/:day/next_process', (req, res) => {
   let newMonth = Number(req.params.month) + 1;
   let newYear = req.params.year;
@@ -53,7 +53,6 @@ app.get('/VMC/:year/:month/:day/next_process', (req, res) => {
 
   res.redirect(`/VMC/${newYear}/${newMonth}/${newDay}`);
 });
-
 app.get('/VMC/:year/:month/:day/prev_process', (req, res) => {
   let newMonth = req.params.month - 1;
   let newYear = req.params.year;
@@ -65,6 +64,25 @@ app.get('/VMC/:year/:month/:day/prev_process', (req, res) => {
   }
 
   res.redirect(`/VMC/${newYear}/${newMonth}/${newDay}`);
+});
+
+
+app.get('/update_takenLeaves', async (req, res) => {
+  const queryString = req.query;
+
+  for(let key in queryString){
+    const value = queryString[key];
+    await LM.withinFile(() =>{
+      return LM.updateTakenLeaveDaysToDB(key, Number.parseInt(value));
+    });
+  }
+
+  res.redirect(`/`);
+});
+
+
+app.get('/update_calendar', async (req, res) => {
+
 });
 
 app.listen(port, () => {

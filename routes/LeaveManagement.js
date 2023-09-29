@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const path = `./datas/LeaveManagementDB.json`;
+const path = `./data/LeaveManagementDB.json`;
 
 let DB = {};
 let tmp;
@@ -186,6 +186,18 @@ function getTotalTakenLeaveDays(){
     return totalTakenLeaves;
 }
 
+async function getTotalRemainingLeaveDays() {
+    let totalRemainingDays = 0;
+
+    totalRemainingDays += await getRemainingLeaveDays("scheduledLeave");
+    totalRemainingDays += await getRemainingLeaveDays("stressManagementLeave");
+    totalRemainingDays += await getRemainingLeaveDays("annualLeave");
+    totalRemainingDays += await getRemainingLeaveDays("petitionLeave");
+    totalRemainingDays += await getRemainingLeaveDays("incentiveLeave");
+
+    return totalRemainingDays;
+}
+
 
 // 위로, 포상, 청원 휴가 DB에 추가하는 methods
 
@@ -209,7 +221,13 @@ function insertLeaveDaysToDB(classification, leaveName, leaveDays){
 }
 
 // 휴가 차감 method
-function deductTakenLeaveDaysToDB(classification){
+function updateTakenLeaveDaysToDB(classification, days){
+    let takenLeaves = DB.aboutTakenLeaveDays.find(e => e.classification === classification);
+    takenLeaves.days = days;
+    return true;
+}
+
+function detectOneTakenLeaveDaysToDB(classification, days){
     let takenLeaves = DB.aboutTakenLeaveDays.find(e => e.classification === classification);
     takenLeaves.days += 1;
     return true;
@@ -252,8 +270,10 @@ export {
 
     insertLeaveDaysToDB,
 
-    deductTakenLeaveDaysToDB,
+    updateTakenLeaveDaysToDB,
+    detectOneTakenLeaveDaysToDB,
     removeAccruedLeaveDaysToDB,
 
-    getRemainingLeaveDays
+    getRemainingLeaveDays,
+    getTotalRemainingLeaveDays
 }
