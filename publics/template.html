@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>leave management</title>
+</head>
+<body>
+    <form action="/update_takenLeaves">
+        <table border="1" align="center">
+            <th>휴가</th>
+            <th>획득</th>
+            <th>사용</th>
+            <th>잔여</th>
+            <tr class="scheduledLeave">
+                <td>정기</td>
+                <td>15</td>
+                <td><input type="text" style="width: 25px" value="" name="sl"></td>
+                <td>0</td>
+            </tr>
+            <tr class="stressManagementLeave">
+                <td>위로</td>
+                <td>19</td>
+                <td><input type="text" style="width: 25px" value="" name="sml"></td>
+                <td>0</td>
+            </tr>
+            <tr class="incentiveLeave">
+                <td>포상</td>
+                <td>15</td>
+                <td><input type="text" style="width: 25px" value="" name="il"></td>
+                <td>0</td>
+            </tr>
+            <tr class="annualLeave">
+                <td>연가</td>
+                <td>15</td>
+                <td><input type="text" style="width: 25px" value="" name="al"></td>
+                <td>0</td>
+            </tr>
+            <tr class="petitionLeave">
+                <td>청원</td>
+                <td>15</td>
+                <td><input type="text" style="width: 25px" value="" name="pl"></td>
+                <td>0</td>
+            </tr>
+        </table>
+
+        <input type="submit" value="save">
+    </form>
+
+</body>
+</html>

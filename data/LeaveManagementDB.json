@@ -14,6 +14,10 @@
                 {
                     "name": "대대복구 차출",
                     "days": 1
+                },
+                {
+                    "name": "크루근무자 위로휴가",
+                    "days": 14
                 }
             ]
         },
@@ -91,7 +95,7 @@
             ]
         },
         {
-            "classification": "annaulLeave",
+            "classification": "annualLeave",
             "details": [
                 {
                     "DateOfIssuance": "2023-03-09",
@@ -108,23 +112,22 @@
             ]
         }
     ],
-
     "aboutTakenLeaveDays": [
         {
             "classification": "scheduledLeave",
-            "days": 12
+            "days": 15
         },
         {
             "classification": "stressManagementLeave",
-            "days": 4
+            "days": 5
         },
         {
             "classification": "incentiveLeave",
             "days": 0
         },
         {
-            "classification": "annaulLeave",
-            "days": 10
+            "classification": "annualLeave",
+            "days": 12
         },
         {
             "classification": "petitionLeave",
