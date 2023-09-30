@@ -1,7 +1,7 @@
-import renderCalendar from './calendar.js';
+import renderCalendar from '../publics/calendar.js';
 import * as renderLeave from './LeaveManagement.js';
 import rendCalendar from "./allNewCalendar.js";
-
+import * as ls from './loadAndSaveData.js';
 export async function main(year, month, url){
     const rendered = await rendCalendar(year, month, 1);
     const renderedLeaveTable = await leaveTable();
@@ -56,7 +56,7 @@ export async function main(year, month, url){
 }
 
 async function leaveTable() {
-    await renderLeave.loadFile();
+    await ls.loadFile();
 
 
     return `

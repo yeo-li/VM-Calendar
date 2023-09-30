@@ -1,50 +1,5 @@
 import fs from 'fs' // 파일 시스템 모듈을 사용할때 필요함
-
-let data = [];
-
-/**
- * file.json을 불러온 뒤 객체 배열을 data에 반환하는 method
- */
-async function loadFile() {
-    const content = await new Promise((res, rej) => {
-        fs.readFile(`./data/file.json`, 'utf-8', function (err, data) {
-            if (err) {
-                rej(err);
-            } else {
-                res(data);
-            }
-        });
-    });
-
-
-    data = JSON.parse(content);
-}
-
-/**
- * data 배열을 file.json에 저장하는 method
- */
-async function saveFile() {
-    await new Promise((res, rej) => {
-        fs.writeFile(`./data/file.json`, JSON.stringify(data, null, 2), 'utf-8', function (err) {
-            if (err) {
-                rej(err);
-            } else {
-                res(data);
-            }
-        });
-    });
-}
-
-/**
- * 파일을 읽은 뒤 저장하는 기능이 필요할 때,
- * 필요 함수를 action에 삽입 후 위 함수를 실행시켜주는 method
- * @param {function} action 
- */
-async function withinFile(action) {
-    await loadFile();
-    await action();
-    await saveFile();
-}
+import * as ls from './loadAndSaveData.js';
 
 /**
  * 필요한 년도의 json 데이터를 읽기 및 생성하는 method
@@ -52,7 +7,7 @@ async function withinFile(action) {
  * @returns
  */
 function getYear(year) {
-    const years = data;
+    const years = ls.calendarDB;
 const thatYear = years.find(e => e.year === year);
 
     if (thatYear == null) {
@@ -331,9 +286,6 @@ function insertWorkSchedule(year, month, day, work) {
 }
 
 export {
-    loadFile,
-    saveFile,
-    withinFile,
     insertTimeSchedule,
     insertDaySchedule,
     editDaySchedule,

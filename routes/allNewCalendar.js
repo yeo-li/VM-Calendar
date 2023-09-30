@@ -1,33 +1,5 @@
 import fs from "fs";
-
-let data = {};
-const path = `./data/file.json`;
-async function loadFile() {
-    const content = await new Promise((res, rej) => {
-        fs.readFile(path, 'utf-8', function (err, data) {
-            if (err) {
-                rej(err);
-            } else {
-                res(data);
-            }
-        });
-    });
-
-    data = JSON.parse(content);
-}
-
-export async function saveFile() {
-    await new Promise((res, rej) => {
-        fs.writeFile(path, JSON.stringify(data, null, 2), 'utf-8', function (err) {
-            if (err) {
-                rej(err);
-            } else {
-                res(data);
-            }
-        });
-    });
-}
-
+import * as ls from "./loadAndSaveData.js";
 
 export function insertWorkSchedule(year, month, day, work) {
 
@@ -37,16 +9,8 @@ export function insertWorkSchedule(year, month, day, work) {
     return;
 }
 
-export async function withinFile(action) {
-    await loadFile();
-    const result = await action();
-    //console.log('withinFile: ' + typeof(resultPromise));
-    await saveFile();
-
-    return result;
-}
 function getYear(year) {
-    const years = data;
+    const years = ls.calendarDB;
     const thatYear = years.find(e => e.year === year);
 
     if (thatYear == null) {
@@ -95,7 +59,7 @@ function getDay2DB(year, month, day) {
 
 function calendarTitle(year, month){
 
-    return `${year}년 ${month}월`;
+    return `<h1 align="center">${year}년 ${month}월</h1>`;
 }
 
 
@@ -176,7 +140,7 @@ export default async function rendCalendar(year, month, date){
         day += await (7 - new Date(`${year}-${month}-${day}`).getDay());
     }
 
-    html += `</tbody></<table> <input type="submit">
+    html += `${calendarTitle(year, month)}</tbody></<table> <input type="submit">
 </form>`;
 
     return html;
@@ -192,11 +156,11 @@ export default async function rendCalendar(year, month, date){
 //console.log(today);
 
 
-const result = await withinFile(() => {
+const result = await ls.withinFile(() => {
     return rendCalendar(2023, 10, 13);
 });
 
 //const result = convertDateObject(2010, 4, 0);
 console.log(result);
-//console.log("cho: "+data);
+//console.log("cho: "+datas);
 //console.log("result: "+ result);

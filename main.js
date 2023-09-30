@@ -4,7 +4,7 @@ import * as url from 'url' // url 모듈을 가져옴
 import bodyParser from "body-parser";
 import * as template from './routes/template.js'
 import * as data from './routes/dataCRUD.js'
-import renderCalendar from './routes/calendar.js'
+import renderCalendar from './publics/calendar.js'
 import * as LM from './routes/LeaveManagement.js'
 import express, {response} from 'express'
 import * as calendar from './routes/allNewCalendar.js';

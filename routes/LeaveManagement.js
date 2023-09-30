@@ -1,49 +1,6 @@
 import fs from 'fs';
-
+import * as ls from './loadAndSaveData.js';
 const path = `./data/LeaveManagementDB.json`;
-
-let DB = {};
-let tmp;
-/**
- * file.json을 불러온 뒤 객체 배열을 data에 반환하는 method
- */
-async function loadFile() {
-    const content = await new Promise((res, rej) => {
-        fs.readFile(path, 'utf-8', function (err, data) {
-            if (err) {
-                rej(err);
-            } else {
-                res(data);
-            }
-        });
-    });
-
-    DB = JSON.parse(content);
-}
-
-/**
- * data 배열을 file.json에 저장하는 method
- */
-async function saveFile() {
-    await new Promise((res, rej) => {
-        fs.writeFile(path,
-            JSON.stringify(DB, null, 2), 'utf-8', function (err) {
-                if (err) {
-                    rej(err);
-                } else {
-                    res(DB);
-                }
-            });
-    });
-}
-
-async function withinFile(action) {
-    await loadFile();
-    const result = await action();
-    await saveFile();
-
-    return result;
-}
 
 /*
 만들어야 할 것
@@ -61,7 +18,7 @@ async function withinFile(action) {
  * @returns {number}
  */
 function getScheduledLeaveDays(){
-    const scheduledLeaves = DB.aboutAccruedLeaveDays.find(e => e.classification === "scheduledLeave");
+    const scheduledLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "scheduledLeave");
     const today = new Date();
     let totalLeaveDays = 0;
 
@@ -80,7 +37,7 @@ function getScheduledLeaveDays(){
  * @returns {number}
  */
 function getAnnualLeaveDays(){
-    const annualLeaves = DB.aboutAccruedLeaveDays.find(e => e.classification === "annualLeave");
+    const annualLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "annualLeave");
     const today = new Date();
     let totalLeaveDays = 0;
 
@@ -98,14 +55,12 @@ function getAnnualLeaveDays(){
  * @returns {number}
  */
 function getStressManagementLeaveDays(){
-    const stressManagementLeaves = DB.aboutAccruedLeaveDays.find(e => e.classification === "stressManagementLeave");
+    const stressManagementLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "stressManagementLeave");
     let totalLeaveDays = 0;
 
     for(const leave of stressManagementLeaves.details){
         totalLeaveDays += leave.days;
     }
-
-    tmp = totalLeaveDays;
 
     return totalLeaveDays;
 }
@@ -115,7 +70,7 @@ function getStressManagementLeaveDays(){
  * @returns {number}
  */
 function getIncentiveLeaveDays(){
-    const incentiveLeaves = DB.aboutAccruedLeaveDays.find(e => e.classification === "incentiveLeave");
+    const incentiveLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "incentiveLeave");
     let totalLeaveDays = 0;
 
     for(const leave of incentiveLeaves.details){
@@ -126,7 +81,7 @@ function getIncentiveLeaveDays(){
 }
 
 function getPetitionLeaveDays(){
-    const petitionLeaves = DB.aboutAccruedLeaveDays.find(e => e.classification === "petitionLeave");
+    const petitionLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "petitionLeave");
     let totalLeaveDays = 0;
 
     for(const leave of petitionLeaves.details){
@@ -170,7 +125,7 @@ async function getAccruedLeaveDays(classification){
 
 // 사용 휴가를 반환하는 methods
 function getTakenLeaveDays(classification){
-    const takenLeaves = DB.aboutTakenLeaveDays.find(e => e.classification === classification);
+    const takenLeaves = ls.LeaveManagementDB.aboutTakenLeaveDays.find(e => e.classification === classification);
     return takenLeaves.days;
 }
 
@@ -215,20 +170,20 @@ function insertLeaveDaysToDB(classification, leaveName, leaveDays){
         return false;
     }
     const leaveObject = createLeaveObject(classification, leaveName, leaveDays);
-    let theLeaves = DB.aboutaccruedLeaveDays.find(e => e.classification === classification);
+    let theLeaves = ls.LeaveManagementDB.aboutaccruedLeaveDays.find(e => e.classification === classification);
     theLeaves.details.push(leaveObject);
     return true;
 }
 
 // 휴가 차감 method
 function updateTakenLeaveDaysToDB(classification, days){
-    let takenLeaves = DB.aboutTakenLeaveDays.find(e => e.classification === classification);
+    let takenLeaves = ls.LeaveManagementDB.aboutTakenLeaveDays.find(e => e.classification === classification);
     takenLeaves.days = days;
     return true;
 }
 
 function detectOneTakenLeaveDaysToDB(classification, days){
-    let takenLeaves = DB.aboutTakenLeaveDays.find(e => e.classification === classification);
+    let takenLeaves = ls.LeaveManagementDB.aboutTakenLeaveDays.find(e => e.classification === classification);
     takenLeaves.days += 1;
     return true;
 }
@@ -239,7 +194,7 @@ function removeAccruedLeaveDaysToDB(classification, leaveName){
         console.warn("이 구분은 휴가를 삭제 할 수 없습니다.");
         return false;
     }
-    let accruedLeaves = DB.aboutAccruedLeaveDays.find(e => e.classification === classification);
+    let accruedLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
     let thatLeaves = accruedLeaves.details;
     thatLeaves = thatLeaves.filter(item => item.name !== leaveName);
     return true;
@@ -257,10 +212,6 @@ async function getRemainingLeaveDays(classification){
 }
 
 export {
-
-    loadFile,
-    saveFile,
-    withinFile,
 
     getAccruedLeaveDays,
     getTotalAccruedLeaveDays,
