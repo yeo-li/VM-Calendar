@@ -72,7 +72,7 @@ function getWorkSchedule(date){
     return theDay.work;
 }
 
-function rendOneDay(date){ // YYYY-MM-DD
+function rendOneDay(date, today){ // YYYY-MM-DD
     //console.log(date)
     if(!date){
         return `
@@ -81,6 +81,17 @@ function rendOneDay(date){ // YYYY-MM-DD
     const year = date.getFullYear();
     const month = date.getMonth()+1;
     const day = date.getDate();
+    //console.log(date.toLocaleDateString(), today.toLocaleDateString());
+    if(date.toLocaleDateString() === today.toLocaleDateString()){
+        //console.log('today!!');
+        return `
+            <td class="today">
+                <a href="#"><div>${date.getDate()}</div></a>
+                <hr>
+                <div><input type="text" value="${getWorkSchedule(date)}" name="${year}/${month}/${day}" style="width: 27px"></div>
+            </td>
+    `
+    }
 
     return `
             <td>
@@ -91,7 +102,7 @@ function rendOneDay(date){ // YYYY-MM-DD
     `
 }
 
-async function rendOneWeek(startDate){ // startDate: Date Object
+async function rendOneWeek(startDate, today){ // startDate: Date Object
 
     // 만약 문자열이라면 date객체로 변환해준 후 함수 진행
     
@@ -102,13 +113,13 @@ async function rendOneWeek(startDate){ // startDate: Date Object
 
     for(let day = 0; day < 7; day++){
         if(day < startDay) {
-            html += rendOneDay(false);
+            html += rendOneDay(false, today);
             continue;
         }
 
         const thisDate = new Date(_date);
         //console.log(thisDate);
-        html += rendOneDay(thisDate);
+        html += rendOneDay(thisDate, today);
         _date = new Date(_date.setDate(_date.getDate() + 1));
 
     }
@@ -135,7 +146,7 @@ export default async function rendCalendar(year, month, date){
 `;
     const lastDate = await new Date(year, month, 0).getDate();
     for(let day = 1; day<=lastDate;){
-        html += await rendOneWeek(new Date(`${year}-${month}-${day}`));
+        html += await rendOneWeek(new Date(`${year}-${month}-${day}`), new Date());
         //console.log(html);
         day += await (7 - new Date(`${year}-${month}-${day}`).getDay());
     }
@@ -145,22 +156,3 @@ export default async function rendCalendar(year, month, date){
 
     return html;
 }
-
-
-
-
-
-//////////////////////////////////////////////// 가상 실행 공간
-
-//const today = await new Date('2023-9-24');
-//console.log(today);
-
-
-const result = await ls.withinFile(() => {
-    return rendCalendar(2023, 10, 13);
-});
-
-//const result = convertDateObject(2010, 4, 0);
-console.log(result);
-//console.log("cho: "+datas);
-//console.log("result: "+ result);

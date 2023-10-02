@@ -3,6 +3,7 @@ import * as renderLeave from './LeaveManagement.js';
 import rendCalendar from "./allNewCalendar.js";
 import * as ls from './loadAndSaveData.js';
 export async function main(year, month, url){
+    await ls.loadFile();
     const rendered = await rendCalendar(year, month, 1);
     const renderedLeaveTable = await leaveTable();
 
@@ -13,28 +14,15 @@ export async function main(year, month, url){
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Calendar</title>
-        <!--
+        
         <style>
-        div {
-            border: 1px solid rgb(39, 131, 39);
-            align-content: center;
-        }
-        
-        div.calender {
-            background-color: rgba(111, 228, 111, 0.356);
-            border: 1px solid rgb(39, 131, 39);
-            align-content: center;
-        }
-        
-  
-        div.null {
-          border: 0px;
-        }
-        -->
-    </style>
-    <!--
+            .today {
+            background-color: #ffec88;
+            }
+        </style>
+        <!--
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-      -->
+        -->
       </head>
       <body>
         <div class="container">
@@ -56,11 +44,8 @@ export async function main(year, month, url){
 }
 
 async function leaveTable() {
-    await ls.loadFile();
-
-
     return `
-    <form action="/update_takenLeaves">
+    <form action="/update_takenLeaves" method="post">
         <table border="2" align="center">
             <th>휴가</th>
             <th>획득</th>
@@ -107,7 +92,6 @@ async function leaveTable() {
                 <td>${await renderLeave.getTotalTakenLeaveDays()}</td>
                 <td>${await renderLeave.getTotalRemainingLeaveDays()}</td>
             </tr>
-            
         </table>
 
         <input type="submit" value="save">
