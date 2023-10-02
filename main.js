@@ -1,14 +1,10 @@
-import http  from 'http' // 아직 잘 모르겠음
-import fs from 'fs' // 파일 시스템 모듈을 사용할때 필요함
-import * as url from 'url' // url 모듈을 가져옴
 import bodyParser from "body-parser";
 import * as template from './routes/template.js'
-import * as data from './routes/dataCRUD.js'
-import renderCalendar from './publics/calendar.js'
 import * as LM from './routes/LeaveManagement.js'
-import express, {response} from 'express'
-import * as calendar from './routes/allNewCalendar.js';
-import * as ls from './routes/loadAndSaveData.js';
+import express from 'express'
+import * as ls from './routes/DBLoaderSaver.js';
+import * as data from './routes/CalendarAccessor.js'
+
 const app = express();
 const port = 3000;
 
@@ -24,6 +20,8 @@ const port = 3000;
   항상 같은 것: 휴가 사용표 및 성과제 외박 발급표 -> 미들웨어
   추가적으로 필요한 것: express.js 사용법, npm 사용법
 */
+
+// main.js: server(not service)
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -45,18 +43,13 @@ app.get('/VMC/:year/:month/:day', async (req, res) => {
   res.send(await template.main(year, month, req.url));
 });
 
-// todo 원하는 날짜에 근무표 저장 한 뒤 메인 페이지로 이동하는 로직 짜기
 app.post('/update_calendar', async (req, res) => {
   const workSchedule = req.body;
 
   for(let key in workSchedule){
     const date = await new Date(key);
-    const year = await date.getFullYear();
-    const month = await date.getMonth()+1;
-    const day = await date.getDate();
-
     await ls.withinFile(()=> {
-      return calendar.insertWorkSchedule(year, month, day, workSchedule[key]);
+      return data.insertWorkSchedule(date, workSchedule[key]);
     });
   }
 
@@ -69,7 +62,7 @@ app.get('/VMC/:year/:month/:day/next_process', (req, res) => {
   let newDay = req.params.day;
 
   if(newMonth > 12){
-    newYear = Number(newYear) + 1;
+    newYear = Number.parseInt(newYear) + 1;
     newMonth -= 12;
   }
 
@@ -81,7 +74,7 @@ app.get('/VMC/:year/:month/:day/prev_process', (req, res) => {
   let newDay = req.params.day;
 
   if(newMonth < 1){
-    newYear = Number(newYear) - 1;
+    newYear = Number.parseInt(newYear) - 1;
     newMonth += 12;
   }
 
@@ -89,10 +82,8 @@ app.get('/VMC/:year/:month/:day/prev_process', (req, res) => {
 });
 
 
-app.post('/update_takenLeaves', async (req, res) =>
-{
+app.post('/update_takenLeaves', async (req, res) => {
   const leaves = req.body;
-  console.log(leaves)
   for(let key in leaves){
     const value = leaves[key];
     await ls.withinFile(() =>{

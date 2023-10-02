@@ -1,125 +1,49 @@
-import fs from "fs";
-import * as ls from "./loadAndSaveData.js";
+import {getWorkSchedule, getDateComponents} from "./CalendarAccessor.js";
 
-export function insertWorkSchedule(year, month, day, work) {
-
-    const thatDay = getDay2DB(year, month, day);
-    thatDay.work = work;
-
-    return;
-}
-
-function getYear(year) {
-    const years = ls.calendarDB;
-    const thatYear = years.find(e => e.year === year);
-
-    if (thatYear == null) {
-        years.push({
-            year: year,
-            months: []
-        });
-        return getYear(year);
-    }
-
-    return thatYear;
-}
-
-function getMonth(year, month) {
-    const thatYear = getYear(year);
-
-    const months = thatYear.months;
-    const thatMonth = months.find(e => e.month === month);
-    if (thatMonth == null) {
-        months.push({
-            month,
-            days: []
-        });
-        return getMonth(year, month);
-    }
-
-    return thatMonth;
-}
-
-function getDay2DB(year, month, day) {
-    const thatMonth = getMonth(year, month);
-
-    const days = thatMonth.days;
-    const thatDay = days.find(e => e.day === day);
-    if (thatDay == null) {
-        days.push({
-            day,
-            work: 'null',
-            schedule: []
-        });
-        return getDay2DB(year, month, day);
-    }
-
-    return thatDay;
-}
 
 function calendarTitle(year, month){
 
     return `<h1 align="center">${year}년 ${month}월</h1>`;
 }
 
-
-function getWorkSchedule(date){
-    const year = date.getFullYear();
-    const month = date.getMonth()+1; // 0~11
-    const day = date.getDate(); // 1~31
-    const theDay = getDay2DB(year, month, day);
-
-    return theDay.work;
-}
-
-function rendOneDay(date, today){ // YYYY-MM-DD
-    //console.log(date)
+function createDayHTML(date, today){
+    //console.log("createDayHTML: "+ date);
     if(!date){
         return `
         <td></td>`;
     }
-    const year = date.getFullYear();
-    const month = date.getMonth()+1;
-    const day = date.getDate();
-    //console.log(date.toLocaleDateString(), today.toLocaleDateString());
+    const thisDate = getDateComponents(date);
+    let Class = '';
+
     if(date.toLocaleDateString() === today.toLocaleDateString()){
-        //console.log('today!!');
-        return `
-            <td class="today">
-                <a href="#"><div>${date.getDate()}</div></a>
-                <hr>
-                <div><input type="text" value="${getWorkSchedule(date)}" name="${year}/${month}/${day}" style="width: 27px"></div>
-            </td>
-    `
+        Class = "today";
+    } else if(getWorkSchedule(date) === '휴'){
+        Class = "leave";
     }
 
     return `
-            <td>
+            <td class="${Class}">
                 <a href="#"><div>${date.getDate()}</div></a>
                 <hr>
-                <div><input type="text" value="${getWorkSchedule(date)}" name="${year}/${month}/${day}" style="width: 27px"></div>
+                <div><input type="text" value="${getWorkSchedule(date)}" name="${thisDate.year}/${thisDate.month}/${thisDate.day}" style="width: 27px"></div>
             </td>
     `
 }
 
-async function rendOneWeek(startDate, today){ // startDate: Date Object
-
-    // 만약 문자열이라면 date객체로 변환해준 후 함수 진행
-    
+async function createWeekHTML(startDate, today){ // startDate: Date Object
+    console.log("createWeekHTML: "+ startDate);
     const startDay = startDate.getDay();
     let _date = startDate;
-    const date = new Date();
     let html = `<tr>`;
 
     for(let day = 0; day < 7; day++){
         if(day < startDay) {
-            html += rendOneDay(false, today);
+            html += createDayHTML(false, today);
             continue;
         }
 
         const thisDate = new Date(_date);
-        //console.log(thisDate);
-        html += rendOneDay(thisDate, today);
+        html += createDayHTML(thisDate, today);
         _date = new Date(_date.setDate(_date.getDate() + 1));
 
     }
@@ -129,7 +53,10 @@ async function rendOneWeek(startDate, today){ // startDate: Date Object
     return html;
 }
 
-export default async function rendCalendar(year, month, date){
+export default async function createCalendarHTML(date){
+    console.log("createCalendarHTML:"+ date);
+    const thisDate = getDateComponents(date);
+
     let html =
         `<form action="/update_calendar" method="post">
 <table border="1" align="center">
@@ -144,15 +71,17 @@ export default async function rendCalendar(year, month, date){
         </thead>
         <tbody>
 `;
-    const lastDate = await new Date(year, month, 0).getDate();
-    for(let day = 1; day<=lastDate;){
-        html += await rendOneWeek(new Date(`${year}-${month}-${day}`), new Date());
-        //console.log(html);
-        day += await (7 - new Date(`${year}-${month}-${day}`).getDay());
+    const lastDate = new Date(thisDate.year, thisDate.month, 0).getDate();
+    for(let day = 1; day <= lastDate;){
+        //console.log(day);
+        html += await createWeekHTML(new Date(`${thisDate.year}-${thisDate.month}-${day}`), new Date());
+        const daysProduced = await (7 - new Date(`${thisDate.year}-${thisDate.month}-${day}`).getDay());
+        day += daysProduced;
     }
 
-    html += `${calendarTitle(year, month)}</tbody></<table> <input type="submit">
-</form>`;
+    html += `${calendarTitle(thisDate.year, thisDate.month)}</tbody></<table> 
+             <input type="submit">
+             </form>`;
 
     return html;
 }

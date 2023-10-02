@@ -25,14 +25,27 @@ POST로 구현하기
 진급 일자 기준으로 카운트
 필요한 것: 진급일 데이터베이스
 
+total
+코드 정리하기
+1. main.js -> 완
+2. CalendarAccessor.js
+3. allNewCalendar.js
+4. LeaveManagement.js
+5. DBLoaderSaver.js
+6. template.js
+
+main.js
 메인 페이지 만들기
 누르면 메인화면으로 가는 로직 짜기
 
 LeaveManagement
 1. 성과제 외박 획득 시각화 하기
 2. 위로, 포상, 청원휴가 add/remove 표 만들기
-3.
+3. leave sort
 
+calendar
+1. next, prev btn
+2. calendarDB date sort, schedule time sort
 
 
 

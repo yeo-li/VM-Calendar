@@ -1,6 +1,4 @@
-import fs from 'fs';
-import * as ls from './loadAndSaveData.js';
-const path = `./data/LeaveManagementDB.json`;
+import * as ls from './DBLoaderSaver.js';
 
 /*
 만들어야 할 것

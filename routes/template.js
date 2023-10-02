@@ -1,10 +1,10 @@
 import renderCalendar from '../publics/calendar.js';
 import * as renderLeave from './LeaveManagement.js';
-import rendCalendar from "./allNewCalendar.js";
-import * as ls from './loadAndSaveData.js';
+import createCalendarHTML from "./allNewCalendar.js";
+import * as ls from './DBLoaderSaver.js';
 export async function main(year, month, url){
     await ls.loadFile();
-    const rendered = await rendCalendar(year, month, 1);
+    const rendered = await createCalendarHTML(new Date(year, month-1, 1));
     const renderedLeaveTable = await leaveTable();
 
     return `
@@ -18,6 +18,9 @@ export async function main(year, month, url){
         <style>
             .today {
             background-color: #ffec88;
+            }
+            .leave {
+            background-color: lightgreen;
             }
         </style>
         <!--
