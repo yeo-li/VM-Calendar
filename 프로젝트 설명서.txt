@@ -28,9 +28,9 @@ POST로 구현하기
 total
 코드 정리하기
 1. main.js -> 완
-2. CalendarAccessor.js
-3. allNewCalendar.js
-4. LeaveManagement.js
+2. CalendarAccessor.js -> completed
+3. allNewCalendar.js -> ''
+4. LeaveManagement.js => ''
 5. DBLoaderSaver.js
 6. template.js
 

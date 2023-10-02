@@ -29,6 +29,9 @@ export async function main(year, month, url){
       </head>
       <body>
         <div class="container">
+        <a href = '${url}/prev_process'>prev</a>
+        <a href="/">home</a>
+        <a href = '${url}/next_process'>next</a>
             ${rendered}
         </div>
         

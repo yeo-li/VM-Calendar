@@ -6,12 +6,14 @@ function calendarTitle(year, month){
     return `<h1 align="center">${year}년 ${month}월</h1>`;
 }
 
-function createDayHTML(date, today){
+function createDayHTML(date){
     //console.log("createDayHTML: "+ date);
     if(!date){
         return `
         <td></td>`;
     }
+
+    const today = new Date();
     const thisDate = getDateComponents(date);
     let Class = '';
 
@@ -30,20 +32,27 @@ function createDayHTML(date, today){
     `
 }
 
-async function createWeekHTML(startDate, today){ // startDate: Date Object
-    console.log("createWeekHTML: "+ startDate);
+async function createWeekHTML(startDate){ // startDate: Date Object
     const startDay = startDate.getDay();
+    // const lastDate = new Date(thisDate.year, thisDate.month, 0).getDate();
+    const thisDate = getDateComponents(startDate);
+    const lastDate = new Date(thisDate.year, thisDate.month, 0).getDate();
     let _date = startDate;
     let html = `<tr>`;
 
     for(let day = 0; day < 7; day++){
         if(day < startDay) {
-            html += createDayHTML(false, today);
+            html += createDayHTML(false);
             continue;
         }
 
         const thisDate = new Date(_date);
-        html += createDayHTML(thisDate, today);
+        html += createDayHTML(thisDate);
+
+        if(_date.getDate() === lastDate){
+            break;
+        }
+
         _date = new Date(_date.setDate(_date.getDate() + 1));
 
     }
@@ -54,7 +63,6 @@ async function createWeekHTML(startDate, today){ // startDate: Date Object
 }
 
 export default async function createCalendarHTML(date){
-    console.log("createCalendarHTML:"+ date);
     const thisDate = getDateComponents(date);
 
     let html =
@@ -74,7 +82,7 @@ export default async function createCalendarHTML(date){
     const lastDate = new Date(thisDate.year, thisDate.month, 0).getDate();
     for(let day = 1; day <= lastDate;){
         //console.log(day);
-        html += await createWeekHTML(new Date(`${thisDate.year}-${thisDate.month}-${day}`), new Date());
+        html += await createWeekHTML(new Date(`${thisDate.year}-${thisDate.month}-${day}`));
         const daysProduced = await (7 - new Date(`${thisDate.year}-${thisDate.month}-${day}`).getDay());
         day += daysProduced;
     }
