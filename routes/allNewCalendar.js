@@ -87,8 +87,8 @@ export default async function createCalendarHTML(date){
         day += daysProduced;
     }
 
-    html += `${calendarTitle(thisDate.year, thisDate.month)}</tbody></<table> 
-             <input type="submit">
+    html += `${calendarTitle(thisDate.year, thisDate.month)}</tbody></table> 
+             <input type="submit" value="Save calendar">
              </form>`;
 
     return html;

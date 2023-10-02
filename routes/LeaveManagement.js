@@ -209,6 +209,19 @@ async function getRemainingLeaveDays(classification){
     return remainingLeaveDays;
 }
 
+export function isLeaveIssued(leave){
+    const leaveDate = new Date(leave.DateOfIssuance);
+    const today = new Date();
+
+    console.log(leaveDate, today)
+
+    if(leaveDate <= today){
+        return true;
+    }
+
+    return false;
+}
+
 export {
 
     getAccruedLeaveDays,

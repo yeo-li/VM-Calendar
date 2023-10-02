@@ -1,5 +1,4 @@
-import renderCalendar from '../publics/calendar.js';
-import * as renderLeave from './LeaveManagement.js';
+import * as lm from './LeaveManagement.js';
 import createCalendarHTML from "./allNewCalendar.js";
 import * as ls from './DBLoaderSaver.js';
 export async function main(year, month, url){
@@ -22,6 +21,9 @@ export async function main(year, month, url){
             .leave {
             background-color: lightgreen;
             }
+            .issued {
+            background-color: yellow;
+            }
         </style>
         <!--
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -36,7 +38,14 @@ export async function main(year, month, url){
         </div>
         
         <div class="leaveTable">
+        <hr>
             ${renderedLeaveTable}
+        </div>
+        
+        <hr>
+        
+        <div class="scheduledLeaveTable">
+            ${await scheduledLeaveTable()}
         </div>
       
       <!--          
@@ -59,51 +68,83 @@ async function leaveTable() {
             <th>잔여</th>
             <tr class="scheduledLeave">
                 <td>정기</td>
-                <td>${await renderLeave.getAccruedLeaveDays("scheduledLeave")}</td>
-                <td><input type="text" style="width: 25px" value=${renderLeave.getTakenLeaveDays("scheduledLeave")} 
+                <td>${await lm.getAccruedLeaveDays("scheduledLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${lm.getTakenLeaveDays("scheduledLeave")} 
                 name="scheduledLeave"></td>
-                <td>${await renderLeave.getRemainingLeaveDays("scheduledLeave")}</td>
+                <td>${await lm.getRemainingLeaveDays("scheduledLeave")}</td>
             </tr>
             <tr class="stressManagementLeave">
                 <td>위로</td>
-                <td>${await renderLeave.getAccruedLeaveDays("stressManagementLeave")}</td>
-                <td><input type="text" style="width: 25px" value=${renderLeave.getTakenLeaveDays("stressManagementLeave")} 
+                <td>${await lm.getAccruedLeaveDays("stressManagementLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${lm.getTakenLeaveDays("stressManagementLeave")} 
                 name="stressManagementLeave"></td>
-                <td>${await renderLeave.getRemainingLeaveDays("stressManagementLeave")}</td>
+                <td>${await lm.getRemainingLeaveDays("stressManagementLeave")}</td>
             </tr>
             <tr class="incentiveLeave">
                 <td>포상</td>
-                <td>${await renderLeave.getAccruedLeaveDays("incentiveLeave")}</td>
-                <td><input type="text" style="width: 25px" value=${await renderLeave.getTakenLeaveDays("incentiveLeave")} 
+                <td>${await lm.getAccruedLeaveDays("incentiveLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${await lm.getTakenLeaveDays("incentiveLeave")} 
                 name="incentiveLeave"></td>
-                <td>${await renderLeave.getRemainingLeaveDays("incentiveLeave")}</td>
+                <td>${await lm.getRemainingLeaveDays("incentiveLeave")}</td>
             </tr>
             <tr class="annualLeave">
                 <td>연가</td>
-                <td>${await renderLeave.getAccruedLeaveDays("annualLeave")}</td>
-                <td><input type="text" style="width: 25px" value=${renderLeave.getTakenLeaveDays("annualLeave")} 
+                <td>${await lm.getAccruedLeaveDays("annualLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${lm.getTakenLeaveDays("annualLeave")} 
                 name="annualLeave"></td>
-                <td>${await renderLeave.getRemainingLeaveDays("annualLeave")}</td>
+                <td>${await lm.getRemainingLeaveDays("annualLeave")}</td>
             </tr>
             <tr class="petitionLeave">
                 <td>청원</td>
-                <td>${await renderLeave.getAccruedLeaveDays("petitionLeave")}</td>
-                <td><input type="text" style="width: 25px" value=${renderLeave.getTakenLeaveDays("petitionLeave")} 
+                <td>${await lm.getAccruedLeaveDays("petitionLeave")}</td>
+                <td><input type="text" style="width: 25px" value=${lm.getTakenLeaveDays("petitionLeave")} 
                 name="petitionLeave"></td>
-                <td>${await renderLeave.getRemainingLeaveDays("petitionLeave")}</td>
+                <td>${await lm.getRemainingLeaveDays("petitionLeave")}</td>
             </tr>
             <tr>
                 <td>총합</td>
-                <td>${await renderLeave.getTotalAccruedLeaveDays()}</td>
-                <td>${await renderLeave.getTotalTakenLeaveDays()}</td>
-                <td>${await renderLeave.getTotalRemainingLeaveDays()}</td>
+                <td>${await lm.getTotalAccruedLeaveDays()}</td>
+                <td>${await lm.getTotalTakenLeaveDays()}</td>
+                <td>${await lm.getTotalRemainingLeaveDays()}</td>
             </tr>
         </table>
 
-        <input type="submit" value="save">
+        <input type="submit" value="save leave table">
     </form>
 
     `
+}
+
+async function scheduledLeaveTable(){
+    const scheduledLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "scheduledLeave").details;
+    let html = `<table border="1px" align="center">
+    <thead>
+    <th>외박</th>
+    <th>발급일</th>
+    <th>수량</th>
+    </thead>
+    <tbody>`;
+
+    for(const leave of scheduledLeaves){
+        const date = leave.DateOfIssuance;
+        const days = leave.days;
+        const index = scheduledLeaves.indexOf(leave) + 1;
+        let Class = '';
+
+        if(lm.isLeaveIssued(leave)){
+            Class = 'issued';
+        }
+
+        html += `<tr class="${Class}">
+            <td>제 ${index}차 성과제</td>
+            <td>${date}</td>
+            <td>${days}일</td>
+        </tr>`;
+    }
+
+    html+='</tbody></table>';
+
+    return html;
 }
 
 export async function updateMain(year, month, url){

@@ -42,6 +42,7 @@ LeaveManagement
 1. 성과제 외박 획득 시각화 하기
 2. 위로, 포상, 청원휴가 add/remove 표 만들기
 3. leave sort
+4. 전체 휴가 카운트해서 leaveTable에 '전체' col 만들기
 
 calendar
 1. next, prev btn
