@@ -10,32 +10,8 @@ import * as ls from './DBLoaderSaver.js';
 6. 분아별 잔여 휴가 반환하기
 */
 
-// 획득 휴가를 반환하는 methods
-/**
- * 성과제 외박을 현재 날짜로부터 몇일을 받았는지 반환하는 method
- * @returns {number}
- */
-function getScheduledLeaveDays(){
-    const scheduledLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "scheduledLeave");
-    const today = new Date();
-    let totalLeaveDays = 0;
-
-    for(const leave of scheduledLeaves.details){
-        //console.log(leave)
-        if(new Date(leave.DateOfIssuance) <= today){
-            totalLeaveDays += leave.days;
-        }
-    }
-
-    return totalLeaveDays;
-}
-
-/**
- * 연가를 현재 날짜로부터 몇일을 받았는지 반환하는 method
- * @returns {number}
- */
-function getAnnualLeaveDays(){
-    const annualLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "annualLeave");
+export function getAccruedLeaveDays(classification){
+    const annualLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
     const today = new Date();
     let totalLeaveDays = 0;
 
@@ -48,78 +24,22 @@ function getAnnualLeaveDays(){
     return totalLeaveDays;
 }
 
+// 획득 휴가를 반환하는 methods
 /**
- * 위로 휴가를 현재 날짜로부터 몇일을 받았는지 반환하는 method
+ * 성과제 외박을 현재 날짜로부터 몇일을 받았는지 반환하는 method
  * @returns {number}
  */
-function getStressManagementLeaveDays(){
-    const stressManagementLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "stressManagementLeave");
+export function getTotalAccruedLeaveDays(){
     let totalLeaveDays = 0;
 
-    for(const leave of stressManagementLeaves.details){
-        totalLeaveDays += leave.days;
-    }
+    totalLeaveDays += getAccruedLeaveDays("scheduledLeave");
+    totalLeaveDays += getAccruedLeaveDays("annualLeave");
+    totalLeaveDays += getAccruedLeaveDays("stressManagementLeave");
+    totalLeaveDays += getAccruedLeaveDays("incentiveLeave");
+    totalLeaveDays += getAccruedLeaveDays("petitionLeave");
 
     return totalLeaveDays;
 }
-
-/**
- *
- * @returns {number}
- */
-function getIncentiveLeaveDays(){
-    const incentiveLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "incentiveLeave");
-    let totalLeaveDays = 0;
-
-    for(const leave of incentiveLeaves.details){
-        totalLeaveDays += leave.days;
-    }
-
-    return totalLeaveDays;
-}
-
-function getPetitionLeaveDays(){
-    const petitionLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "petitionLeave");
-    let totalLeaveDays = 0;
-
-    for(const leave of petitionLeaves.details){
-        totalLeaveDays += leave.days;
-    }
-
-    return totalLeaveDays;
-}
-
-function getTotalAccruedLeaveDays(){
-    let totalLeaveDays = 0;
-
-    totalLeaveDays += getAnnualLeaveDays();
-    totalLeaveDays += getIncentiveLeaveDays();
-    totalLeaveDays += getScheduledLeaveDays();
-    totalLeaveDays += getPetitionLeaveDays();
-    totalLeaveDays += getStressManagementLeaveDays();
-
-    return totalLeaveDays;
-}
-
-async function getAccruedLeaveDays(classification){
-
-    switch(classification){
-        case "scheduledLeave":
-            return getScheduledLeaveDays();
-        case "annualLeave":
-            return getAnnualLeaveDays();
-        case "stressManagementLeave":
-            return getStressManagementLeaveDays();
-        case "incentiveLeave":
-            return getIncentiveLeaveDays();
-        case "petitionLeave":
-            return getPetitionLeaveDays();
-    }
-
-    console.warn("입력하신 구분이 없습니다.");
-    return false;
-}
-
 
 // 사용 휴가를 반환하는 methods
 function getTakenLeaveDays(classification){
@@ -154,20 +74,20 @@ async function getTotalRemainingLeaveDays() {
 
 // 위로, 포상, 청원 휴가 DB에 추가하는 methods
 
-function createLeaveObject(classification, name, days){
+function createLeaveObject(DateOfIssuance, name, days){
     return {
-        classification,
+        DateOfIssuance,
         name,
         days
     };
 }
 
-function insertLeaveDaysToDB(classification, leaveName, leaveDays){
+function insertLeaveDaysToDB(classification, leaveName, leaveDays, DateOfIssuance){
     if(classification === "scheduledLeave" || classification === "annualLeave"){
         console.warn("이 구분에는 휴가를 추가 할 수 없습니다.");
         return false;
     }
-    const leaveObject = createLeaveObject(classification, leaveName, leaveDays);
+    const leaveObject = createLeaveObject(DateOfIssuance, leaveName, leaveDays);
     let theLeaves = ls.LeaveManagementDB.aboutaccruedLeaveDays.find(e => e.classification === classification);
     theLeaves.details.push(leaveObject);
     return true;
@@ -180,7 +100,7 @@ function updateTakenLeaveDaysToDB(classification, days){
     return true;
 }
 
-function detectOneTakenLeaveDaysToDB(classification, days){
+function detectOneTakenLeaveDaysToDB(classification){
     let takenLeaves = ls.LeaveManagementDB.aboutTakenLeaveDays.find(e => e.classification === classification);
     takenLeaves.days += 1;
     return true;
@@ -213,8 +133,6 @@ export function isLeaveIssued(leave){
     const leaveDate = new Date(leave.DateOfIssuance);
     const today = new Date();
 
-    console.log(leaveDate, today)
-
     if(leaveDate <= today){
         return true;
     }
@@ -222,11 +140,30 @@ export function isLeaveIssued(leave){
     return false;
 }
 
+export function getIssuedLeaveDays(classification){
+    const incentiveLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
+    let totalLeaveDays = 0;
+
+    for(const leave of incentiveLeaves.details){
+        totalLeaveDays += leave.days;
+    }
+
+    return totalLeaveDays;
+}
+
+export function getTotalIssuedLeaveDays(){
+    let totalLeaveDays = 0;
+
+    totalLeaveDays += getIssuedLeaveDays("scheduledLeave");
+    totalLeaveDays += getIssuedLeaveDays("annualLeave");
+    totalLeaveDays += getIssuedLeaveDays("stressManagementLeave");
+    totalLeaveDays += getIssuedLeaveDays("incentiveLeave");
+    totalLeaveDays += getIssuedLeaveDays("petitionLeave");
+
+    return totalLeaveDays;
+}
+
 export {
-
-    getAccruedLeaveDays,
-    getTotalAccruedLeaveDays,
-
     getTakenLeaveDays,
     getTotalTakenLeaveDays,
 

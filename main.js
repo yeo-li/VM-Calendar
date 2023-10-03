@@ -29,12 +29,9 @@ app.use(bodyParser.json());
 app.get('/', async (req, res) => {
   // 현재 날짜를 구한 뒤 현재 날짜의 달력을 출력함 or year과 month, day를 보냄
   const today = new Date();
-  const nowYear = today.getFullYear();
-  const nowMonth = today.getMonth() + 1;
-  const nowDay = today.getDate();
+  const nowDate = data.getDateComponents(today);
 
-  //res.send('/: Completed');
-  res.redirect(`/VMC/${nowYear}/${nowMonth}/${nowDay}`);
+  res.redirect(`/VMC/${nowDate.year}/${nowDate.month}/${nowDate.day}`);
 });
 app.get('/VMC/:year/:month/:day', async (req, res) => {
   const year = Number.parseInt(req.params.year);
@@ -43,6 +40,12 @@ app.get('/VMC/:year/:month/:day', async (req, res) => {
   res.send(await template.main(year, month, req.url));
 });
 
+app.get('/EDIT/VMC/:year/:month/:day', async (req, res) => {
+  const year = Number.parseInt(req.params.year);
+  const month = Number.parseInt(req.params.month);
+
+  res.send(await template.mainForEdit(year, month, req.url));
+});
 app.post('/update_calendar', async (req, res) => {
   const workSchedule = req.body;
 
@@ -79,6 +82,31 @@ app.get('/VMC/:year/:month/:day/prev_process', (req, res) => {
   }
 
   res.redirect(`/VMC/${newYear}/${newMonth}/${newDay}`);
+});
+
+app.get('/EDIT/VMC/:year/:month/:day/next_process', (req, res) => {
+  let newMonth = Number(req.params.month) + 1;
+  let newYear = req.params.year;
+  let newDay = req.params.day;
+
+  if(newMonth > 12){
+    newYear = Number.parseInt(newYear) + 1;
+    newMonth -= 12;
+  }
+
+  res.redirect(`/EDIT/VMC/${newYear}/${newMonth}/${newDay}`);
+});
+app.get('/EDIT/VMC/:year/:month/:day/prev_process', (req, res) => {
+  let newMonth = req.params.month - 1;
+  let newYear = req.params.year;
+  let newDay = req.params.day;
+
+  if(newMonth < 1){
+    newYear = Number.parseInt(newYear) - 1;
+    newMonth += 12;
+  }
+
+  res.redirect(`/EDIT/VMC/${newYear}/${newMonth}/${newDay}`);
 });
 
 

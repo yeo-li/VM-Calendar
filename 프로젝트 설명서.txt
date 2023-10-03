@@ -35,17 +35,17 @@ total
 6. template.js
 
 main.js
-메인 페이지 만들기
-누르면 메인화면으로 가는 로직 짜기
+메인 페이지 만들기 completed
+누르면 메인화면으로 가는 로직 짜기 completed
 
 LeaveManagement
-1. 성과제 외박 획득 시각화 하기
-2. 위로, 포상, 청원휴가 add/remove 표 만들기
+1. 성과제 외박 획득 시각화 하기 -> completed
+2. 위로, 포상, 청원휴가 add/remove 표 만들기 -> 머리 깨질듯
 3. leave sort
-4. 전체 휴가 카운트해서 leaveTable에 '전체' col 만들기
+4. 전체 휴가 카운트해서 leaveTable에 '전체' col 만들기 -> completed
 
 calendar
-1. next, prev btn
+1. next, prev btn -> completed
 2. calendarDB date sort, schedule time sort
 
 
