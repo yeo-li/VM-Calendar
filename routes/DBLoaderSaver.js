@@ -1,8 +1,8 @@
 import fs from "fs";
 export let calendarDB, LeaveDB;
 
-const calendarDB_path = './datas/calendarDB.json';
-const LeaveManagementDB_path = './datas/LeaveDB.json';
+const calendarDB_path = '../datas/calendarDB.json';
+const LeaveManagementDB_path = '../datas/LeaveDB.json';
 
 export async function loadFile() {
     const content = await new Promise((res, rej) => {
@@ -24,6 +24,8 @@ export async function loadFile() {
             }
         });
     });
+
+    //console.log(content2)
 
     calendarDB = JSON.parse(content);
     LeaveDB = JSON.parse(content2);
@@ -53,7 +55,7 @@ export async function saveFile() {
 
 export async function withinFile(action) {
     await loadFile();
-    const result = await action();
+    let result = await action();
     //console.log('withinFile: ' + typeof(resultPromise));
     await saveFile();
 

@@ -1,4 +1,5 @@
-import {LeaveDB, withinFile} from "./DBLoaderSaver.js";
+import {LeaveDB, withinFile, loadFile} from "./DBLoaderSaver.js";
+await loadFile();
 
 /*
 필요한 것
@@ -12,10 +13,11 @@ import {LeaveDB, withinFile} from "./DBLoaderSaver.js";
  */
 
 function isAcquiredLeaveAvailable(leave){
+    //console.log(leave);
     const today = new Date();
-    const DateOfIssuance = new Date(leave.DateOfIssuance);
-
-    return today > DateOfIssuance;
+    const DateOfIssuance = new Date(leave.dateOfIssuance);
+    //console.log(today > DateOfIssuance);
+    return today >= DateOfIssuance;
 }
 
 
@@ -52,7 +54,7 @@ export async function getAcquiredLeaveArray(classification){
 
     leaveArray = LeaveDB.filter(leave =>
         leave.classification === classification && isAcquiredLeaveAvailable(leave));
-
+    //console.log(leaveArray)
     return leaveArray;
 }
 export async function getLeaveArray(classification){
@@ -79,6 +81,8 @@ export async function getUnusedAndAcquiredLeaveArray(classification){
 
     return leaveArray;
 }
+
+
 
 function searchLeaveByName(name){
     let leave;
@@ -109,11 +113,13 @@ async function sortLeavesByDateAscending(){
 }
 async function insertLeaveToLeaveDB(classification, dateOfIssuance, name, days, isUsed=false, dateOfUse="2024-10-08"){
     const leave = await createLeave(classification, dateOfIssuance, name, days, isUsed, dateOfUse);
-    if(searchLeaveByName(name)){
-        console.warn("같은 이름의 휴가가 있습니다.");
-        return false;
-    }
+
     await withinFile(async () => {
+        if(searchLeaveByName(name)){
+            console.warn("같은 이름의 휴가가 있습니다.");
+            return false;
+        }
+
         await LeaveDB.push(leave);
         await sortLeavesByDateAscending();
     });
@@ -124,9 +130,17 @@ async function insertLeaveToLeaveDB(classification, dateOfIssuance, name, days, 
 
 
 export async function removeLeaveToLeaveDB(name){
-    await withinFile(async () =>{
-        LeaveDB = await LeaveDB.filter(leave => leave.name !== name);
-    })
+    await withinFile(async () => {
+        const idx = LeaveDB.indexOf(searchLeaveByName(name));
+        let tmp;
+        tmp = LeaveDB[0];
+        LeaveDB[0] = LeaveDB[idx];
+        LeaveDB[idx] = tmp;
+
+        LeaveDB.shift();
+
+        await sortLeavesByDateAscending();
+    });
 
     return true;
 }
@@ -147,7 +161,7 @@ export async function editLeaveToLeaveDB(oldName, classification, dateOfIssuance
 
 
 
-export async function countLeaveDays(leaveArray){
+export function countLeaveDays(leaveArray){
     let totalDays = 0;
     for(const leave of leaveArray){
         totalDays += leave.days;
@@ -155,3 +169,7 @@ export async function countLeaveDays(leaveArray){
 
     return totalDays;
 }
+
+///////////////////////////////////
+
+console.log(countLeaveDays(await getLeaveArray("위로")))
