@@ -21,6 +21,16 @@ function createDayHTML(date){
         Class = "today";
     } else if(getWorkSchedule(date) === '휴'){
         Class = "leave";
+    } else if(getWorkSchedule(date) === '외'){
+        Class = "scheduledLeave";
+    } else if(getWorkSchedule(date) === '위'){
+        Class = "stressManagementLeave";
+    } else if(getWorkSchedule(date) === '포'){
+        Class = "incentiveLeave";
+    } else if(getWorkSchedule(date) === '연'){
+        Class = "annualLeave";
+    } else if(getWorkSchedule(date) === '청'){
+        Class = "petitionLeave";
     }
 
     return `
@@ -63,7 +73,7 @@ function createDayHTMLForEdit(date) {
 }
 
 function createOptionTagsHTML(date){
-    let arr = ['주', '야', '비', '외', '위', '포', '연', '청'];
+    let arr = ['주', '야', '비', '휴'];
     let html = ``;
     const selectedData = getWorkSchedule(date);
     html += createOptionTagHTML(selectedData, true);

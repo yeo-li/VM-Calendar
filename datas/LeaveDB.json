@@ -1,0 +1,10 @@
+[
+  {
+    "classification": "scheduledLeave",
+    "dateOfIssuance": "2023-03-31",
+    "name": "제 1차 성과제 외박",
+    "days": 3,
+    "isUsed": true,
+    "dateOfUse": "2023-04-09"
+  }
+]

@@ -1,8 +1,8 @@
 import fs from "fs";
-export let calendarDB, LeaveManagementDB;
+export let calendarDB, LeaveDB;
 
 const calendarDB_path = './datas/calendarDB.json';
-const LeaveManagementDB_path = './datas/LeaveManagementDB.json';
+const LeaveManagementDB_path = './datas/LeaveDB.json';
 
 export async function loadFile() {
     const content = await new Promise((res, rej) => {
@@ -26,7 +26,7 @@ export async function loadFile() {
     });
 
     calendarDB = JSON.parse(content);
-    LeaveManagementDB = JSON.parse(content2);
+    LeaveDB = JSON.parse(content2);
 }
 
 export async function saveFile() {
@@ -41,11 +41,11 @@ export async function saveFile() {
     });
 
     await new Promise((res, rej) => {
-        fs.writeFile(LeaveManagementDB_path, JSON.stringify(LeaveManagementDB, null, 2), 'utf-8', function (err) {
+        fs.writeFile(LeaveManagementDB_path, JSON.stringify(LeaveDB, null, 2), 'utf-8', function (err) {
             if (err) {
                 rej(err);
             } else {
-                res(LeaveManagementDB);
+                res(LeaveDB);
             }
         });
     });

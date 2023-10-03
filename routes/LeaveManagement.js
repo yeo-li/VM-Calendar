@@ -11,7 +11,7 @@ import * as ls from './DBLoaderSaver.js';
 */
 
 export function getAccruedLeaveDays(classification){
-    const annualLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
+    const annualLeaves = ls.LeaveDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
     const today = new Date();
     let totalLeaveDays = 0;
 
@@ -43,7 +43,7 @@ export function getTotalAccruedLeaveDays(){
 
 // 사용 휴가를 반환하는 methods
 function getTakenLeaveDays(classification){
-    const takenLeaves = ls.LeaveManagementDB.aboutTakenLeaveDays.find(e => e.classification === classification);
+    const takenLeaves = ls.LeaveDB.aboutTakenLeaveDays.find(e => e.classification === classification);
     return takenLeaves.days;
 }
 
@@ -88,20 +88,20 @@ function insertLeaveDaysToDB(classification, leaveName, leaveDays, DateOfIssuanc
         return false;
     }
     const leaveObject = createLeaveObject(DateOfIssuance, leaveName, leaveDays);
-    let theLeaves = ls.LeaveManagementDB.aboutaccruedLeaveDays.find(e => e.classification === classification);
+    let theLeaves = ls.LeaveDB.aboutaccruedLeaveDays.find(e => e.classification === classification);
     theLeaves.details.push(leaveObject);
     return true;
 }
 
 // 휴가 차감 method
 function updateTakenLeaveDaysToDB(classification, days){
-    let takenLeaves = ls.LeaveManagementDB.aboutTakenLeaveDays.find(e => e.classification === classification);
+    let takenLeaves = ls.LeaveDB.aboutTakenLeaveDays.find(e => e.classification === classification);
     takenLeaves.days = days;
     return true;
 }
 
 function detectOneTakenLeaveDaysToDB(classification){
-    let takenLeaves = ls.LeaveManagementDB.aboutTakenLeaveDays.find(e => e.classification === classification);
+    let takenLeaves = ls.LeaveDB.aboutTakenLeaveDays.find(e => e.classification === classification);
     takenLeaves.days += 1;
     return true;
 }
@@ -112,7 +112,7 @@ function removeAccruedLeaveDaysToDB(classification, leaveName){
         console.warn("이 구분은 휴가를 삭제 할 수 없습니다.");
         return false;
     }
-    let accruedLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
+    let accruedLeaves = ls.LeaveDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
     let thatLeaves = accruedLeaves.details;
     thatLeaves = thatLeaves.filter(item => item.name !== leaveName);
     return true;
@@ -141,7 +141,7 @@ export function isLeaveIssued(leave){
 }
 
 export function getIssuedLeaveDays(classification){
-    const incentiveLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
+    const incentiveLeaves = ls.LeaveDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
     let totalLeaveDays = 0;
 
     for(const leave of incentiveLeaves.details){

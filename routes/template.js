@@ -13,24 +13,30 @@ export async function main(year, month, url){
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Calendar</title>
+        <title>휴가언제야</title>
         
         <style>
             .today {
             background-color: #ffec88;
             }
             .leave {
-            background-color: lightgreen;
+            background-color: #a3c1f0;
             }
             .issued {
             background-color: yellow;
             }
+            
+            
+            
+            
+            
         </style>
         <!--
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         -->
       </head>
       <body>
+      <h1 align="center">♥️예지야 내가 정말 많이 사랑해♥️</h1>
         <div class="container">
         <a href = '${url}/prev_process'>prev</a>
         <a href="/">home</a>
@@ -48,7 +54,11 @@ export async function main(year, month, url){
         <div class="scheduledLeaveTable">
             ${await scheduledLeaveTable()}
         </div>
-      
+        <hr>
+        <div>
+            ${await totalLeaveTable("stressManagementLeave")}
+        </div>
+        <hr>
       <!--          
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
@@ -181,7 +191,7 @@ return `
     `;
 }
 async function scheduledLeaveTable(){
-    const scheduledLeaves = ls.LeaveManagementDB.aboutAccruedLeaveDays.find(e => e.classification === "scheduledLeave").details;
+    const scheduledLeaves = ls.LeaveDB.aboutAccruedLeaveDays.find(e => e.classification === "scheduledLeave").details;
     let html = `<table border="1px" align="center">
     <thead>
     <th>외박</th>
@@ -212,6 +222,39 @@ async function scheduledLeaveTable(){
     return html;
 }
 
+async function totalLeaveTable(classification){
+    const scheduledLeaves = ls.LeaveDB.aboutAccruedLeaveDays.find(e => e.classification === classification).details;
+    let html = `<table border="1px" align="center">
+    <thead>
+    <th>외박</th>
+    <th>발급일</th>
+    <th>수량</th>
+    </thead>
+    <tbody>`;
+
+    for(const leave of scheduledLeaves){
+        const name = leave.name;
+        const date = leave.DateOfIssuance;
+        const days = leave.days;
+        const index = scheduledLeaves.indexOf(leave) + 1;
+        let Class = '';
+
+        if(lm.isLeaveIssued(leave)){
+            Class = 'issued';
+        }
+
+        html += `<tr class="${Class}">
+            <td>${name}</td>
+            <td>${date}</td>
+            <td>${days}일</td>
+        </tr>`;
+    }
+
+    html+='</tbody></table>';
+
+    return html;
+}
+
 async function addLeaveTable(){
     return `<tr>
             <td><input type="text" name="classification"></td>
@@ -223,4 +266,12 @@ async function addLeaveTable(){
 
 async function addOrRemoveLeaveTable(){
 
+}
+
+async function wrapFormTag(action, url, method){
+    let html = `<form action="${url}" method="${method}">`
+    html += await action();
+    html += `</form>`;
+
+    return html;
 }

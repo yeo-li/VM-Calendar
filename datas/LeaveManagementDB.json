@@ -103,62 +103,77 @@
       "details": [
         {
           "DateOfIssuance": "2023-03-31",
+          "name": "제 1차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2023-05-12",
+          "name": "제 2차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2023-06-23",
+          "name": "제 3차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2023-08-04",
+          "name": "제 4차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2023-09-15",
+          "name": "제 5차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2023-10-27",
+          "name": "제 6차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2023-12-08",
+          "name": "제 7차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2024-01-19",
+          "name": "제 8차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2024-03-01",
+          "name": "제 9차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2024-04-12",
+          "name": "제 10차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2024-05-24",
+          "name": "제 11차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2024-07-05",
+          "name": "제 12차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2024-08-16",
+          "name": "제 13차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2024-09-27",
+          "name": "제 14차 성과제 외박",
           "days": 3
         },
         {
           "DateOfIssuance": "2024-10-01",
+          "name": "제 15차 성과제 외박",
           "days": 1
         }
       ]
