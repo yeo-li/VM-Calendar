@@ -12,7 +12,7 @@ await loadFile();
 7. 휴가 생성
  */
 
-function isAcquiredLeaveAvailable(leave){
+export function isAcquiredLeaveAvailable(leave){
     //console.log(leave);
     const today = new Date();
     const DateOfIssuance = new Date(leave.dateOfIssuance);

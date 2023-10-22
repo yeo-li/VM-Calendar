@@ -1,11 +1,12 @@
 import * as calendar from "./allNewCalendar.js";
 import * as ls from './DBLoaderSaver.js';
+import * as ml from './ManagementLeaveDB.js'
 
 async function navigationBar(){
     return `
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/TESTPAGE">휴가 언제야</a>
+        <a class="navbar-brand" href="/TESTPAGE"><h3>휴가 언제야</h3></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,6 +35,7 @@ async function header(year, month, url){
     <div><a class="btn" href = '${url}/next_process' ><h1>&gt</h1></a></div>
 </div>`;
 }
+
 export async function html(year, month, url, template){
     return `
 <!doctype html>
@@ -50,7 +52,8 @@ export async function html(year, month, url, template){
     ${await navigationBar()}
     ${await header(year, month, url)}
     ${template}
-
+    <a class="btn" href="#" id="leaveTableToggle">▼ Leave Table</a>
+    <div class="container" id="leaveTable" style="display: none">${await scheduledLeaveTable()}</div>
 <script src="/script/pathnameAdder.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
@@ -67,4 +70,37 @@ export async function mainForEdit(year, month){
     await ls.loadFile();
     return await calendar.createCalendarHTMLForEdit(new Date(year, month-1, 1));
 
+}
+
+export async function scheduledLeaveTable(){
+    await ls.loadFile();
+    //const scheduledLeave = await ml.getLeaveArray("외박");
+    const scheduledLeave = ls.LeaveDB;
+    let html = `<table class="table table-bordered">
+        <thead>
+            <th>외박</th>
+            <th>발급일</th>
+            <th>일수</th>
+        </thead><tbody>
+`;
+
+    for(const leave of scheduledLeave){
+        let Class = ``;
+        if(leave.isUsed){
+            Class = `table-secondary`;
+        }else if(ml.isAcquiredLeaveAvailable(leave)){
+            Class = `table-info`;
+        }
+
+
+        html += `<tr class="${Class}">
+            <td>${leave.name}</td>
+            <td>${leave.dateOfIssuance}</td>
+            <td>${leave.days}</td>
+        </tr>`;
+    }
+
+    html += '</tbody></table>';
+
+    return html;
 }
