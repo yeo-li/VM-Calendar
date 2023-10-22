@@ -8,6 +8,86 @@
     "dateOfUse": "2024-10-08"
   },
   {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-1",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-2",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-3",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-4",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-5",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-6",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-7",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-8",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-9",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-10",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
     "classification": "외박",
     "dateOfIssuance": "2023-03-31",
     "name": "제 1차 성과제 외박",
@@ -88,6 +168,70 @@
     "dateOfUse": "2024-10-08"
   },
   {
+    "classification": "연가",
+    "dateOfIssuance": "2023-09-09",
+    "name": "상병 연가-1",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-09-09",
+    "name": "상병 연가-2",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-09-09",
+    "name": "상병 연가-3",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-09-09",
+    "name": "상병 연가-4",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-09-09",
+    "name": "상병 연가-5",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-09-09",
+    "name": "상병 연가-6",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-09-09",
+    "name": "상병 연가-7",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-09-09",
+    "name": "상병 연가-8",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
     "classification": "외박",
     "dateOfIssuance": "2023-09-15",
     "name": "제 5차 성과제 외박",
@@ -163,6 +307,86 @@
     "classification": "위로",
     "dateOfIssuance": "2024-03-01",
     "name": "제 9차 크루근무자 위로휴가",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-1",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-2",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-3",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-4",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-5",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-6",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-7",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-8",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-9",
+    "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2024-03-09",
+    "name": "병장 연가-10",
     "days": 1,
     "isUsed": false,
     "dateOfUse": "2024-10-08"

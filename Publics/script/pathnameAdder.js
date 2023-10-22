@@ -22,4 +22,20 @@ document.getElementById('leaveTableToggle').addEventListener('click', () => {
         document.getElementById('leaveTableToggle').innerHTML = "▼ Leave Table";
     }
 
-})
+});
+
+let isLeaveStatusTableDisplay = false;
+document.getElementById('leaveStatusTableToggle').addEventListener('click', () => {
+    const leaveStatusTable = document.getElementById('leaveStatusTable');
+
+    if(isLeaveStatusTableDisplay === false){
+        leaveStatusTable.style.display = 'block';
+        isLeaveStatusTableDisplay = true;
+        document.getElementById('leaveStatusTableToggle').innerHTML = "▲ 휴가 현황 표";
+    } else{
+        leaveStatusTable.style.display = 'none';
+        isLeaveStatusTableDisplay = false;
+        document.getElementById('leaveStatusTableToggle').innerHTML = "▼ 휴가 현황 표";
+    }
+
+});

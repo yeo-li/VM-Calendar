@@ -71,6 +71,15 @@ export async function getUnusedLeaveArray(classification){
 
     return leaveArray;
 }
+
+export async function getUsedLeaveArray(classification){
+    let leaveArray;
+
+    leaveArray = LeaveDB.filter(leave =>
+        leave.classification === classification && leave.isUsed);
+
+    return leaveArray;
+}
 export async function getUnusedAndAcquiredLeaveArray(classification){
     let leaveArray;
 
