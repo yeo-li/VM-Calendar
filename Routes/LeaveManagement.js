@@ -11,11 +11,11 @@ import * as ls from './DBLoaderSaver.js';
 */
 
 export function getAccruedLeaveDays(classification){
-    const annualLeaves = ls.LeaveDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
+    const annualLeaves = ls.LeaveDB.filter(e => e.classification === classification);
     const today = new Date();
     let totalLeaveDays = 0;
 
-    for(const leave of annualLeaves.details){
+    for(const leave of annualLeaves){
         if(new Date(leave.DateOfIssuance) <= today){
             totalLeaveDays += leave.days;
         }
@@ -43,8 +43,13 @@ export function getTotalAccruedLeaveDays(){
 
 // 사용 휴가를 반환하는 methods
 function getTakenLeaveDays(classification){
-    const takenLeaves = ls.LeaveDB.aboutTakenLeaveDays.find(e => e.classification === classification);
-    return takenLeaves.days;
+    const takenLeaves = ls.LeaveDB.filter(e => e.classification === classification);
+    let takenLeaveDays = 0;
+    for(const leave of takenLeaves){
+        takenLeaveDays += leave.days;
+    }
+
+    return takenLeaveDays;
 }
 
 function getTotalTakenLeaveDays(){
@@ -141,10 +146,10 @@ export function isLeaveIssued(leave){
 }
 
 export function getIssuedLeaveDays(classification){
-    const incentiveLeaves = ls.LeaveDB.aboutAccruedLeaveDays.find(e => e.classification === classification);
+    const incentiveLeaves = ls.LeaveDB.filter(e => e.classification === classification);
     let totalLeaveDays = 0;
 
-    for(const leave of incentiveLeaves.details){
+    for(const leave of incentiveLeaves){
         totalLeaveDays += leave.days;
     }
 

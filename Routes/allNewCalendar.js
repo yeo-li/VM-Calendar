@@ -1,9 +1,9 @@
 import {getWorkSchedule, getDateComponents} from "./CalendarAccessor.js";
 
 
-function calendarTitle(year, month){
+export function calendarTitle(year, month){
 
-    return `<h1 align="center">${year}년 ${month}월</h1>`;
+    return `<h1 align="center" style="width: 70%">${year}년 ${month}월</h1>`;
 }
 
 function createDayHTML(date){
@@ -18,9 +18,9 @@ function createDayHTML(date){
     let Class = '';
 
     if(date.toLocaleDateString() === today.toLocaleDateString()){
-        Class = "today";
+        Class = "table-warning";
     } else if(getWorkSchedule(date) === '휴'){
-        Class = "leave";
+        Class = "table-success";
     } else if(getWorkSchedule(date) === '외'){
         Class = "scheduledLeave";
     } else if(getWorkSchedule(date) === '위'){
@@ -53,9 +53,9 @@ function createDayHTMLForEdit(date) {
     let Class = '';
 
     if(date.toLocaleDateString() === today.toLocaleDateString()){
-        Class = "today";
+        Class = "table-warning";
     } else if(getWorkSchedule(date) === '휴'){
-        Class = "leave";
+        Class = "table-success";
     }
 
     return `
@@ -134,8 +134,8 @@ export async function createCalendarHTML(date, url){
     const thisDate = getDateComponents(date);
 
     let html =
-        `<table border="1" align="center">
-        <thead>
+        `<table class="table table-bordered table-hover">
+        <thead class="table-dark">
             <th>일</th>
             <th>월</th>
             <th>화</th>
@@ -154,8 +154,7 @@ export async function createCalendarHTML(date, url){
         day += daysProduced;
     }
 
-    html += `${calendarTitle(thisDate.year, thisDate.month)}</tbody></table> 
-             <button onclick="location.href='/EDIT${url}'">Edit Calendar</button>`;
+    html += `</tbody></table>`;
 
     return html;
 }
@@ -195,9 +194,9 @@ export async function createCalendarHTMLForEdit(date){
     const thisDate = getDateComponents(date);
 
     let html =
-        `<form action="/update_calendar" method="post">
-<table border="1" align="center">
-        <thead>
+        `<form action="/TESTPAGE/update_calendar" method="post">
+<table class="table table-bordered table-hover">
+        <thead class="table-dark">
             <th>일</th>
             <th>월</th>
             <th>화</th>
@@ -216,8 +215,8 @@ export async function createCalendarHTMLForEdit(date){
         day += daysProduced;
     }
 
-    html += `${calendarTitle(thisDate.year, thisDate.month)}</tbody></table> 
-             <input type="submit" value="Save calendar">
+    html += `</tbody></table> 
+             <button type="submit" class="btn btn-primary" style="float: right">Save calendar</button>
              </form>`;
 
     return html;

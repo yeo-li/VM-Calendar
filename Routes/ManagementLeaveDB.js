@@ -20,8 +20,6 @@ function isAcquiredLeaveAvailable(leave){
     return today >= DateOfIssuance;
 }
 
-
-
 export async function getTotalAcquiredLeaveArray(){
     let leaveArray;
 
@@ -171,5 +169,3 @@ export function countLeaveDays(leaveArray){
 }
 
 ///////////////////////////////////
-
-console.log(countLeaveDays(await getLeaveArray("위로")))

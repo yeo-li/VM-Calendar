@@ -1,0 +1,13 @@
+.today {
+    background-color: #ffec88;
+}
+.leave {
+    background-color: #a3c1f0;
+}
+.issued {
+    background-color: yellow;
+}
+
+.container {
+    display: flex;
+}

@@ -1,8 +1,8 @@
 import fs from "fs";
 export let calendarDB, LeaveDB;
 
-const calendarDB_path = '../datas/calendarDB.json';
-const LeaveManagementDB_path = '../datas/LeaveDB.json';
+const calendarDB_path = './Datas/calendarDB.json';
+const LeaveManagementDB_path = './Datas/LeaveDB.json';
 
 export async function loadFile() {
     const content = await new Promise((res, rej) => {
