@@ -3,6 +3,7 @@ import * as template from './Routes/template.js'
 import express from 'express'
 import * as ls from './Routes/DBLoaderSaver.js'
 import * as data from './Routes/CalendarAccessor.js'
+import * as ml from './Routes/ManagementLeaveDB.js'
 import {mainForEdit} from "./Routes/template.js";
 
 const app = express();
@@ -27,16 +28,16 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static('./Publics'))
 
-app.get('/TESTPAGE', async (req, res) => {
+app.get('/whenisyourleave', async (req, res) => {
   // 현재 날짜를 구한 뒤 현재 날짜의 달력을 출력함 or year과 month, day를 보냄
   const today = new Date();
   const nowDate = data.getDateComponents(today);
 
-  res.redirect(`/TESTPAGE/${nowDate.year}/${nowDate.month}/${nowDate.day}`);
+  res.redirect(`/whenisyourleave/${nowDate.year}/${nowDate.month}/${nowDate.day}`);
 });
 
 
-app.get('/TESTPAGE/:year/:month/:day', async (req, res) => {
+app.get('/whenisyourleave/:year/:month/:day', async (req, res) => {
   const year = Number.parseInt(req.params.year);
   const month = Number.parseInt(req.params.month);
 
@@ -44,7 +45,7 @@ app.get('/TESTPAGE/:year/:month/:day', async (req, res) => {
 });
 
 
-app.get('/TESTPAGE/:year/:month/:day/EDIT', async (req, res) => {
+app.get('/whenisyourleave/:year/:month/:day/EDIT', async (req, res) => {
   const year = Number.parseInt(req.params.year);
   const month = Number.parseInt(req.params.month);
 
@@ -52,7 +53,7 @@ app.get('/TESTPAGE/:year/:month/:day/EDIT', async (req, res) => {
 });
 
 
-app.post('/TESTPAGE/update_calendar', async (req, res) => {
+app.post('/whenisyourleave/update_calendar', async (req, res) => {
   const workSchedule = req.body;
 
   for(let key in workSchedule){
@@ -62,11 +63,11 @@ app.post('/TESTPAGE/update_calendar', async (req, res) => {
     });
   }
 
-  res.redirect('/TESTPAGE');
+  res.redirect('/whenisyourleave');
 });
 
 
-app.get('/TESTPAGE/:year/:month/:day/next_process', (req, res) => {
+app.get('/whenisyourleave/:year/:month/:day/next_process', (req, res) => {
   let newMonth = Number(req.params.month) + 1;
   let newYear = req.params.year;
   let newDay = req.params.day;
@@ -76,11 +77,14 @@ app.get('/TESTPAGE/:year/:month/:day/next_process', (req, res) => {
     newMonth -= 12;
   }
 
-  res.redirect(`/TESTPAGE/${newYear}/${newMonth}/${newDay}`);
+  res.redirect(`/whenisyourleave/${newYear}/${newMonth}/${newDay}`);
 });
 
+app.get('/1234', (req, res) => {
+  return render('calendar.ejs')
+}) 
 
-app.get('/TESTPAGE/:year/:month/:day/prev_process', (req, res) => {
+app.get('/whenisyourleave/:year/:month/:day/prev_process', (req, res) => {
   let newMonth = req.params.month - 1;
   let newYear = req.params.year;
   let newDay = req.params.day;
@@ -90,11 +94,11 @@ app.get('/TESTPAGE/:year/:month/:day/prev_process', (req, res) => {
     newMonth += 12;
   }
 
-  res.redirect(`/TESTPAGE/${newYear}/${newMonth}/${newDay}`);
+  res.redirect(`/whenisyourleave/${newYear}/${newMonth}/${newDay}`);
 });
 
 
-app.get('/TESTPAGE/:year/:month/:day/EDIT/next_process', (req, res) => {
+app.get('/whenisyourleave/:year/:month/:day/EDIT/next_process', (req, res) => {
   let newMonth = Number(req.params.month) + 1;
   let newYear = req.params.year;
   let newDay = req.params.day;
@@ -104,11 +108,11 @@ app.get('/TESTPAGE/:year/:month/:day/EDIT/next_process', (req, res) => {
     newMonth -= 12;
   }
 
-  res.redirect(`/TESTPAGE/${newYear}/${newMonth}/${newDay}/EDIT`);
+  res.redirect(`/whenisyourleave/${newYear}/${newMonth}/${newDay}/EDIT`);
 });
 
 
-app.get('/TESTPAGE/:year/:month/:day/EDIT/prev_process', (req, res) => {
+app.get('/whenisyourleave/:year/:month/:day/EDIT/prev_process', (req, res) => {
   let newMonth = req.params.month - 1;
   let newYear = req.params.year;
   let newDay = req.params.day;
@@ -118,9 +122,60 @@ app.get('/TESTPAGE/:year/:month/:day/EDIT/prev_process', (req, res) => {
     newMonth += 12;
   }
 
-  res.redirect(`/TESTPAGE/${newYear}/${newMonth}/${newDay}/EDIT`);
+  res.redirect(`/whenisyourleave/${newYear}/${newMonth}/${newDay}/EDIT`);
 });
 
+app.post('/whenisyourleave/NewLeave/add', async (req, res) => {
+  const data = req.body;
+
+  await ml.insertLeaveToLeaveDB(data.classification, data.dateOfIssuance, data.name, parseInt(data.days));
+
+  res.redirect('/whenisyourleave');
+});
+
+app.get('/whenisyourleave/NewLeave', async (req, res) => {
+
+  res.send(await template.clearHTML(await template.addNewVacation()));
+
+});
+
+
+app.get('/whenisyourleave/leave/:method', async (req, res) => {
+  const method = req.params.method;
+
+  let html = ``;
+
+  html += await template.searchVacation(`/whenisyourleave/leave/${req.params.method}`);
+  if(req.query.classification != null){
+    html += await template.searchLeaveTable(`/whenisyourleave/leave/${method}/process/start`, req.query.classification);
+    html += await template.submitBtn(method);
+  }
+
+  res.send(await template.clearHTML(html));
+});
+
+app.post('/whenisyourleave/leave/:method/process/start', async (req, res) => {
+  const datas = req.body;
+
+  if(req.params.method === "remove"){
+    console.log("remove", datas)
+    for(const key of Object.keys(datas)){
+      console.log(key);
+      await ml.removeLeaveToLeaveDB(key);
+    }
+  } else if(req.params.method === "add"){
+    let days = 0;
+
+    for(const key of Object.keys(datas)){
+      let leave = await ml.searchLeaveByName(key);
+      days += leave.days;
+
+    }
+  }
+
+
+  res.redirect('/whenisyourleave/');
+});
 
 
 app.listen(port, () => {

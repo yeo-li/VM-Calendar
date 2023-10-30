@@ -7,7 +7,7 @@ async function navigationBar(){
     return `
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/TESTPAGE"><h3>휴가 언제야</h3></a>
+        <a class="navbar-brand" href="/whenisyourleave"><h3>휴가 언제야</h3></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,7 +17,7 @@ async function navigationBar(){
                     <a class="nav-link active" id="add-pathname" aria-current="page" href="#">Edit Calendar</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Add Leaves</a>
+                    <a class="nav-link" href="/whenisyourleave/NewLeave">Add New Leave</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="https://www.notion.so/a258a9fe4c0f46ab8494f6910539faf9">Couple Notion</a>
@@ -35,6 +35,35 @@ async function header(year, month, url){
     ${calendar.calendarTitle(year, month)}
     <div><a class="btn" href = '${url}/next_process' ><h1>&gt</h1></a></div>
 </div>`;
+}
+
+export async function clearHTML(template){
+    return `
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>휴가언제야</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+<body>
+    ${await navigationBar()}
+    ${template}
+    
+    <a class="btn" href="#" id="leaveStatusTableToggle">▼ 휴가 현황 표</a>
+    <div class="container" id="leaveStatusTable" style="display: none">${await leaveStatusTable()}</div>
+    
+    <a class="btn" href="#" id="leaveTableToggle">▼ Leave Table</a>
+    <div class="container" id="leaveTable" style="display: none">${await leaveTable()}</div>
+    
+<script src="/script/pathnameAdder.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>
+    `;
 }
 
 export async function html(year, month, url, template){
@@ -128,15 +157,15 @@ export async function leaveStatusTable(){
         html += `
             <tr>
                 <td>${leave}</td>
-                <td>${ml.countLeaveDays(await ml.getAcquiredLeaveArray(leave))}</td>
+                <td>${ml.countLeaveDays(await ml.getLeaveArray(leave))}</td>
                 <td>${ml.countLeaveDays(await ml.getUsedLeaveArray(leave))}</td>
-                <td>${ml.countLeaveDays(await ml.getUnusedAndAcquiredLeaveArray(leave))}</td>
+                <td>${ml.countLeaveDays(await ml.getLeaveArray(leave)) - ml.countLeaveDays(await ml.getUsedLeaveArray(leave))}</td>
             </tr>
         `;
 
-        acquiredLeave += ml.countLeaveDays(await ml.getAcquiredLeaveArray(leave));
+        acquiredLeave += ml.countLeaveDays(await ml.getLeaveArray(leave));
         usedLeave += ml.countLeaveDays(await ml.getUsedLeaveArray(leave));
-        remainedLeave += ml.countLeaveDays(await ml.getUnusedAndAcquiredLeaveArray(leave));
+        remainedLeave += (ml.countLeaveDays(await ml.getLeaveArray(leave)) - ml.countLeaveDays(await ml.getUsedLeaveArray(leave)));
     }
 
 
@@ -152,6 +181,74 @@ export async function leaveStatusTable(){
         
     
 </tbody></table>`;
+
+    return html;
+}
+
+export async function addNewVacation(){
+    return `   <h2>add new leave page</h2> <hr>
+    <form action="/whenisyourleave/NewLeave/add" method="post">
+        <p>휴가 종류: <select name="classification">
+            <option>외박</option>
+            <option>연가</option>
+            <option>위로</option>
+            <option>포상</option>
+            <option>청원</option>
+        </select></p>
+        
+        <p>휴가 발급일: <input type="date" name="dateOfIssuance"></p>
+
+        <p>휴가명: <input type="text" name="name"></p>
+
+        <p>일 수: <input type="number" name="days"></p>
+
+        <input type="submit" value="add">
+    </form>`;
+}
+
+export async function searchVacation(url){
+    return `
+        <form action="${url}" method="get">
+        휴가 종류: <input type="text" name="classification">
+
+        <input type="submit" value="search">
+    </form>
+    `
+}
+
+export async function submitBtn(value){
+    return `<button type="submit" form="leaveTable">${value}</button>`;
+}
+
+export async function searchLeaveTable(actionURL, classification){
+    await ls.loadFile();
+    const leaves = await ml.getLeaveArray(classification);
+    //const leaves = ls.LeaveDB;
+    let html = `
+        <form action="${actionURL}" method="post" id="leaveTable">
+        <table class="table table-bordered">
+        <thead class="table-light">
+            <th>순번</th>
+            <th>휴가명</th>
+            <th>발급일</th>
+            <th>사용 여부</th>
+            <th>일 수</th>
+            <th>선택</th>
+        </thead><tbody>
+`;
+
+    for(let i = 0; i < leaves.length; i++){
+        html += `<tr>
+            <td>${i+1}</td>
+            <td>${leaves[i].name}</td>
+            <td>${leaves[i].dateOfIssuance}</td>
+            <td>${leaves[i].isUsed}</td>
+            <td>${leaves[i].days}</td>
+            <td><input type="checkbox" name="${leaves[i].name}"></td>
+        </tr>`;
+    }
+
+    html += '</tbody></table></form>';
 
     return html;
 }

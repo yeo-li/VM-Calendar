@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add leave</title>
+</head>
+<body>
+<!--
+      },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-1",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+-->
+    <form action="add/leave" method="post">
+        휴가 종류: <select name="classification">
+            <option>외박</option>
+            <option>연가</option>
+            <option>위로</option>
+            <option>포상</option>
+            <option>청원</option>
+        </select>
+
+        휴가 발급일: <input type="date" name="dateOfIssuance">
+
+        휴가명: <input type="text" name="name">
+
+        일 수: <input type="number">
+
+        <input type="submit">
+    </form>
+</body>
+</html>

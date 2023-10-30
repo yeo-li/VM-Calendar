@@ -16,7 +16,7 @@ export function isAcquiredLeaveAvailable(leave){
     //console.log(leave);
     const today = new Date();
     const DateOfIssuance = new Date(leave.dateOfIssuance);
-    //console.log(today > DateOfIssuance);
+    //console.log(today >= DateOfIssuance);
     return today >= DateOfIssuance;
 }
 
@@ -91,10 +91,13 @@ export async function getUnusedAndAcquiredLeaveArray(classification){
 
 
 
-function searchLeaveByName(name){
+export async function searchLeaveByName(name){
     let leave;
 
     leave = LeaveDB.find(leave => leave.name === name);
+    if(leave === undefined){
+        leave = false;
+    }
 
     return leave;
 }
@@ -118,11 +121,11 @@ async function sortLeavesByDateAscending(){
         if(A < B) return -1;
     });
 }
-async function insertLeaveToLeaveDB(classification, dateOfIssuance, name, days, isUsed=false, dateOfUse="2024-10-08"){
+export async function insertLeaveToLeaveDB(classification, dateOfIssuance, name, days, isUsed=false, dateOfUse="2024-10-08"){
     const leave = await createLeave(classification, dateOfIssuance, name, days, isUsed, dateOfUse);
 
     await withinFile(async () => {
-        if(searchLeaveByName(name)){
+        if(await searchLeaveByName(name)){
             console.warn("같은 이름의 휴가가 있습니다.");
             return false;
         }
@@ -138,7 +141,7 @@ async function insertLeaveToLeaveDB(classification, dateOfIssuance, name, days, 
 
 export async function removeLeaveToLeaveDB(name){
     await withinFile(async () => {
-        const idx = LeaveDB.indexOf(searchLeaveByName(name));
+        const idx = LeaveDB.indexOf(await searchLeaveByName(name));
         let tmp;
         tmp = LeaveDB[0];
         LeaveDB[0] = LeaveDB[idx];

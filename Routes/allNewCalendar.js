@@ -6,6 +6,25 @@ export function calendarTitle(year, month){
     return `<h1 align="center" style="width: 70%">${year}년 ${month}월</h1>`;
 }
 
+
+
+function convertDateToString(date){
+
+    const thisDate = getDateComponents(date);
+    function convertNumber(number){
+        let rst = '0';
+        if(number < 10){
+            rst += number.toString(10);
+        } else{
+            rst = number.toString(10);
+        }
+
+        return rst;
+    }
+
+    return `${convertNumber(thisDate.year)}-${convertNumber(thisDate.month)}-${convertNumber(thisDate.day)}`;;
+}
+
 function createDayHTML(date){
     //console.log("createDayHTML: "+ date);
     if(!date){
@@ -14,30 +33,19 @@ function createDayHTML(date){
     }
 
     const today = new Date();
-    const thisDate = getDateComponents(date);
     let Class = '';
 
     if(date.toLocaleDateString() === today.toLocaleDateString()){
         Class = "table-warning";
     } else if(getWorkSchedule(date) === '휴'){
         Class = "table-success";
-    } else if(getWorkSchedule(date) === '외'){
-        Class = "scheduledLeave";
-    } else if(getWorkSchedule(date) === '위'){
-        Class = "stressManagementLeave";
-    } else if(getWorkSchedule(date) === '포'){
-        Class = "incentiveLeave";
-    } else if(getWorkSchedule(date) === '연'){
-        Class = "annualLeave";
-    } else if(getWorkSchedule(date) === '청'){
-        Class = "petitionLeave";
     }
 
     return `
-            <td class="${Class}">
+            <td class="${Class}" id="${convertDateToString(date)}" onclick="modal(${convertDateToString(date)})">
                 <a href="#"><div>${date.getDate()}</div></a>
                 <hr>
-                <div style="width: 28px">${getWorkSchedule(date)}</div>
+                <div >${getWorkSchedule(date)}</div>
             </td>
     `
 }
@@ -194,7 +202,7 @@ export async function createCalendarHTMLForEdit(date){
     const thisDate = getDateComponents(date);
 
     let html =
-        `<form action="/TESTPAGE/update_calendar" method="post">
+        `<form action="/whenisyourleave/update_calendar" method="post">
 <table class="table table-bordered table-hover">
         <thead class="table-dark">
             <th>일</th>

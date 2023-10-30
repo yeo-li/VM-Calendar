@@ -39,3 +39,7 @@ document.getElementById('leaveStatusTableToggle').addEventListener('click', () =
     }
 
 });
+
+function modal(date){
+
+}
