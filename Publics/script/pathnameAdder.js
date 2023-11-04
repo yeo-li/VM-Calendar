@@ -10,7 +10,7 @@ document.getElementById('add-pathname').addEventListener('click', ()=>{
 
 let isLeaveTableDisplay = false;
 document.getElementById('leaveTableToggle').addEventListener('click', () => {
-    const leaveTable = document.getElementById('leaveTable');
+    const leaveTable = document.getElementById('leaveTable1');
 
     if(isLeaveTableDisplay === false){
         leaveTable.style.display = 'block';
@@ -55,9 +55,7 @@ function submitForm(uniqueValue){
 }
 
 function Modal(date){
-    document.getElementById('modal').style.display = 'block';
 
-    document.getElementById('main').style.display = 'none';
     const myForm = document.createElement('form');
     myForm.id = 'myForm';
     myForm.method = 'get';
@@ -66,44 +64,28 @@ function Modal(date){
     hiddenInput.value = date;
     hiddenInput.name = "date";
 
-    const applyVacationBtn = document.createElement('button');
-    applyVacationBtn.type='button';
+    const applyVacationBtn = document.createElement('a');
+    applyVacationBtn.className='btn btn-primary';
     applyVacationBtn.innerHTML = '휴가 추가';
     applyVacationBtn.onclick = function () {submitForm('apply')};
 
-    const updateVacationBtn = document.createElement('button');
-    updateVacationBtn.type='button';
-    updateVacationBtn.innerHTML = '휴가 수정';
-    updateVacationBtn.onclick = function () {submitForm('update')};
-
-    const releaseVacationBtn = document.createElement('button');
-    releaseVacationBtn.type='button';
+    const releaseVacationBtn = document.createElement('a');
+    releaseVacationBtn.className='btn btn-primary';
     releaseVacationBtn.innerHTML = '휴가 해제';
     releaseVacationBtn.onclick = function () {submitForm('release')};
 
-    const addMemoBtn = document.createElement('button');
-    addMemoBtn.type='button';
+    const addMemoBtn = document.createElement('a');
+    addMemoBtn.className='btn btn-primary';
     addMemoBtn.innerHTML = '메모 추가';
     addMemoBtn.onclick = function (){submitForm('memo')};
 
 
     myForm.appendChild(hiddenInput);
     myForm.appendChild(applyVacationBtn);
-    myForm.appendChild(updateVacationBtn);
     myForm.appendChild(releaseVacationBtn);
     myForm.appendChild(addMemoBtn);
 
     document.getElementById('modal').innerHTML = '';
-
-    const cancelBtn = document.createElement('button');
-    cancelBtn.type = "button";
-    cancelBtn.innerHTML = '취소';
-    cancelBtn.onclick = function () {
-        document.getElementById('main').style.display = 'block';
-        document.getElementById('modal').style.display = 'none';
-    };
-    myForm.appendChild(cancelBtn);
-
 
     document.getElementById('modal').appendChild(myForm);
 

@@ -163,15 +163,18 @@ app.get('/whenisyourleave/leave/release/process/start/:date', async (req, res) =
   const datas = req.params.date;
 
   await ls.withinFile(async () => {
-    let DATE = new Date(datas);
-    let leave = await ml.searchLeaveByName(data.getVacation(DATE));
+    let leave = await ml.searchLeaveByName(data.getVacation(new Date(datas)));
+    let DATE = new Date(leave.dateOfUse);
 
     leave.isUsed = false;
-    leave.dateOfIssuance = "2024-10-08";
+    leave.dateOfUse = "2024-10-08";
+
     for(let i = 0; i < leave.days; i++){
-      console.log(DATE)
-      data.insertVacation(DATE, '');
-      DATE = data.getNextDay(DATE);
+      if(data.getVacation(DATE) === leave.name){
+        data.insertVacation(DATE, '');
+        DATE = data.getNextDay(DATE);
+      }
+
     }
 
   });
@@ -190,31 +193,33 @@ app.post('/whenisyourleave/leave/:method/process/start', async (req, res) => {
       await ml.removeLeaveToLeaveDB(key);
     }
   } else if(req.params.method === "apply"){
-    let days = 0;
-
     for(const key of Object.keys(datas)){
       if(key === 'date') continue;
       await ls.withinFile(async () => {
         let leave = await ml.searchLeaveByName(key);
-        console.log(key);
-        /*
-      "classification": "외박",
-      "dateOfIssuance": "2024-10-01",
-      "name": "제 15차 성과제 외박",
-      "days": 1,
-      "isUsed": false,
-      "dateOfUse": "2024-10-08"
-
-         */
-        leave.isUsed = true;
-        leave.dateOfIssuance = datas.date;
         let DATE = new Date(datas.date);
+        let isOkay = true;
 
         for(let i = 0; i < leave.days; i++){
-          console.log(DATE)
-          data.insertVacation(DATE, key);
+          if(data.getVacation(DATE) !== ''){
+            console.log("apply: collision!");
+            isOkay = false;
+            break;
+          }
           DATE = data.getNextDay(DATE);
         }
+
+        DATE = new Date(datas.date);
+        if(isOkay){
+          for(let i = 0; i < leave.days;i++){
+            data.insertVacation(DATE, key);
+            DATE = data.getNextDay(DATE);
+          }
+
+          leave.isUsed = true;
+          leave.dateOfUse = datas.date;
+        }
+
       });
     }
   }

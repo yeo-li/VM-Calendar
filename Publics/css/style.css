@@ -8,6 +8,16 @@
     background-color: yellow;
 }
 
-.container {
+.container, .TABLE {
     display: flex;
+    justify-content: space-between;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td{
+    padding: 8px;
 }

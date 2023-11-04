@@ -1,4 +1,4 @@
-import {getWorkSchedule, getDateComponents} from "./CalendarAccessor.js";
+import {getWorkSchedule, getDateComponents, getVacation, getMemo} from "./CalendarAccessor.js";
 
 
 export function calendarTitle(year, month){
@@ -37,15 +37,38 @@ function createDayHTML(date){
 
     if(date.toLocaleDateString() === today.toLocaleDateString()){
         Class = "table-warning";
-    } else if(getWorkSchedule(date) === '휴'){
+    } else if(getWorkSchedule(date) === '휴' && getVacation(date) === ''){
         Class = "table-success";
+    } else if(getVacation(date) !== ''){
+        Class = "table-primary"
     }
 
+    let memoAndVacation = ``;
+    if(getVacation(date) !== '' || getMemo(date) !== ''){
+        memoAndVacation += `<button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    ◦
+  </button>`;
+    } else{
+        memoAndVacation += `<button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false"> &nbsp
+  </button>`;
+    }
+
+    memoAndVacation += `<div>
+  <ul class="dropdown-menu">
+    <li class="dropdown-item">휴가명:${getVacation(date)}</li>
+    <li><hr class="dropdown-divider"></li>
+    <li class="dropdown-item">메모: ${getMemo(date)}</li>
+  </ul></div>`;
+
+
+
     return `
-            <td class="${Class}" id="${convertDateToString(date)}" onclick="Modal('${convertDateToString(date)}')">
-                <a href="#"><div>${date.getDate()}</div></a>
+            <td class="${Class}">
+            <div id="TABLE">
+                ${date.getDate()}
+            ${memoAndVacation}</div>
                 <hr>
-                <div >${getWorkSchedule(date)}</div>
+                <div data-bs-toggle="modal" data-bs-target="#exampleModalCenter" id="${convertDateToString(date)}" onclick="Modal('${convertDateToString(date)}')">${getWorkSchedule(date)}</div>
             </td>
     `
 }

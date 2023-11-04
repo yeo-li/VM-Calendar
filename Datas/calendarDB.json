@@ -62,37 +62,37 @@
           {
             "day": 10,
             "work": "휴",
-            "vacation": "",
+            "vacation": "가족 초청 행사",
             "memo": ""
           },
           {
             "day": 11,
             "work": "휴",
-            "vacation": "",
+            "vacation": "가족 초청 행사",
             "memo": ""
           },
           {
             "day": 12,
             "work": "휴",
-            "vacation": "",
+            "vacation": "제 6차 성과제 외박",
             "memo": ""
           },
           {
             "day": 13,
             "work": "휴",
-            "vacation": "",
+            "vacation": "제 6차 성과제 외박",
             "memo": ""
           },
           {
             "day": 14,
             "work": "휴",
-            "vacation": "",
+            "vacation": "제 6차 성과제 외박",
             "memo": ""
           },
           {
             "day": 15,
             "work": "휴",
-            "vacation": "",
+            "vacation": "제 6차 크루근무자 위로휴가",
             "memo": ""
           },
           {
@@ -186,6 +186,53 @@
             "memo": ""
           }
         ]
+      },
+      {
+        "month": 12,
+        "days": [
+          {
+            "day": 25,
+            "work": "null",
+            "vacation": "제 7차 성과제 외박",
+            "memo": ""
+          },
+          {
+            "day": 26,
+            "work": "null",
+            "vacation": "제 7차 성과제 외박",
+            "memo": ""
+          },
+          {
+            "day": 27,
+            "work": "null",
+            "vacation": "제 7차 성과제 외박",
+            "memo": ""
+          },
+          {
+            "day": 28,
+            "work": "null",
+            "vacation": "제 7차 크루근무자 위로휴가",
+            "memo": ""
+          },
+          {
+            "day": 29,
+            "work": "null",
+            "vacation": "대민지원 차출 위로휴가",
+            "memo": ""
+          },
+          {
+            "day": 30,
+            "work": "null",
+            "vacation": "상병 연가-1",
+            "memo": ""
+          },
+          {
+            "day": 31,
+            "work": "null",
+            "vacation": "상병 연가-2",
+            "memo": ""
+          }
+        ]
       }
     ]
   },
@@ -199,6 +246,45 @@
             "day": 1,
             "work": "null",
             "vacation": "가족 초청 행사",
+            "memo": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "year": 2024,
+    "months": [
+      {
+        "month": 11,
+        "days": [
+          {
+            "day": 10,
+            "work": "null",
+            "vacation": "",
+            "memo": ""
+          }
+        ]
+      },
+      {
+        "month": 1,
+        "days": [
+          {
+            "day": 7,
+            "work": "null",
+            "vacation": "",
+            "memo": ""
+          },
+          {
+            "day": 1,
+            "work": "null",
+            "vacation": "상병 연가-3",
+            "memo": ""
+          },
+          {
+            "day": 2,
+            "work": "null",
+            "vacation": "상병 연가-4",
             "memo": ""
           }
         ]

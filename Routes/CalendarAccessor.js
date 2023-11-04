@@ -171,6 +171,12 @@ export function getVacation(date){
     return theDay.vacation;
 }
 
+export function getMemo(date){
+    const theDay = getDayData(date);
+
+    return theDay.memo;
+}
+
 export function insertVacation(date, name){
     const theDay = getDayData(date);
 
