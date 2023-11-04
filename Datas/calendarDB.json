@@ -3,1117 +3,203 @@
     "year": 2023,
     "months": [
       {
-        "month": 9,
-        "days": [
-          {
-            "day": 3,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 29,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 30,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 24,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 25,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 26,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 27,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 28,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 1,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 2,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 4,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 5,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 6,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 7,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 8,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 9,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 10,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 11,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 12,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 13,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 14,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 15,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 16,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 17,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 18,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 19,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 20,
-            "work": "일캠",
-            "schedule": []
-          },
-          {
-            "day": 21,
-            "work": "일캠",
-            "schedule": []
-          },
-          {
-            "day": 22,
-            "work": "일캠",
-            "schedule": []
-          },
-          {
-            "day": 23,
-            "work": "주",
-            "schedule": []
-          }
-        ]
-      },
-      {
-        "month": 8,
-        "days": [
-          {
-            "day": 29,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 30,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 1,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 2,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 3,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 4,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 5,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 6,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 7,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 8,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 9,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 10,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 11,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 12,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 13,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 14,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 15,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 16,
-            "work": "하이",
-            "schedule": []
-          },
-          {
-            "day": 17,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 18,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 19,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 20,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 21,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 22,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 23,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 24,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 25,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 26,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 27,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 28,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 31,
-            "work": "null",
-            "schedule": []
-          }
-        ]
-      },
-      {
-        "month": 10,
-        "days": [
-          {
-            "day": 1,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 2,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 3,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 4,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 5,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 6,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 7,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 8,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 9,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 10,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 11,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 12,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 13,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 14,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 15,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 16,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 17,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 18,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 19,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 20,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 21,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 22,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 23,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 24,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 25,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 26,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 27,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 28,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 29,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 30,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 31,
-            "work": "주",
-            "schedule": []
-          }
-        ]
-      },
-      {
         "month": 11,
         "days": [
           {
             "day": 1,
             "work": "야",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 2,
             "work": "비",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 3,
             "work": "주",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 4,
             "work": "야",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 5,
             "work": "비",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 6,
             "work": "주",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 7,
             "work": "야",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 8,
             "work": "비",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 9,
             "work": "주",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 10,
             "work": "휴",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 11,
             "work": "휴",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 12,
             "work": "휴",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 13,
             "work": "휴",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 14,
             "work": "휴",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 15,
             "work": "휴",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 16,
-            "work": "주",
-            "schedule": []
+            "work": "야",
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 17,
-            "work": "야",
-            "schedule": []
+            "work": "비",
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 18,
-            "work": "비",
-            "schedule": []
+            "work": "주",
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 19,
-            "work": "주",
-            "schedule": []
+            "work": "야",
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 20,
-            "work": "야",
-            "schedule": []
+            "work": "비",
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 21,
-            "work": "비",
-            "schedule": []
+            "work": "주",
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 22,
-            "work": "주",
-            "schedule": []
+            "work": "야",
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 23,
-            "work": "야",
-            "schedule": []
+            "work": "비",
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 24,
-            "work": "비",
-            "schedule": []
+            "work": "주",
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 25,
             "work": "주",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 26,
             "work": "야",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 27,
             "work": "비",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 28,
             "work": "주",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 29,
             "work": "야",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           },
           {
             "day": 30,
             "work": "비",
-            "schedule": []
-          }
-        ]
-      },
-      {
-        "month": 7,
-        "days": [
-          {
-            "day": 1,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 2,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 3,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 4,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 5,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 6,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 7,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 8,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 9,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 10,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 11,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 12,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 13,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 14,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 15,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 16,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 17,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 18,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 19,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 20,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 21,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 22,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 23,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 24,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 25,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 26,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 27,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 28,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 29,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 30,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 31,
-            "work": "null",
-            "schedule": []
-          }
-        ]
-      },
-      {
-        "month": 12,
-        "days": [
-          {
-            "day": 1,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 2,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 3,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 4,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 5,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 6,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 7,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 8,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 9,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 10,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 11,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 12,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 13,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 14,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 15,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 16,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 17,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 18,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 19,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 20,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 21,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 22,
-            "work": "주",
-            "schedule": []
-          },
-          {
-            "day": 23,
-            "work": "야",
-            "schedule": []
-          },
-          {
-            "day": 24,
-            "work": "비",
-            "schedule": []
-          },
-          {
-            "day": 25,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 26,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 27,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 28,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 29,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 30,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 31,
-            "work": "휴",
-            "schedule": []
+            "vacation": "",
+            "memo": ""
           }
         ]
       }
     ]
   },
   {
-    "year": 2024,
+    "year": 1970,
     "months": [
       {
         "month": 1,
         "days": [
           {
             "day": 1,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 2,
-            "work": "휴",
-            "schedule": []
-          },
-          {
-            "day": 3,
             "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 4,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 5,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 6,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 7,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 8,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 9,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 10,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 11,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 12,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 13,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 14,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 15,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 16,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 17,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 18,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 19,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 20,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 21,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 22,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 23,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 24,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 25,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 26,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 27,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 28,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 29,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 30,
-            "work": "null",
-            "schedule": []
-          },
-          {
-            "day": 31,
-            "work": "null",
-            "schedule": []
+            "vacation": "가족 초청 행사",
+            "memo": ""
           }
         ]
       }

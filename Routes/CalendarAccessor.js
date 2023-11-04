@@ -12,6 +12,14 @@ export function getDateComponents(dateObject){
     return result;
 }
 
+export function getNextDay(dateObject){
+    const nextDay = new Date(dateObject);
+    nextDay.setDate(dateObject.getDate() + 1);
+
+    return nextDay;
+
+}
+
 export function getYearData(year) {
     const years = ls.calendarDB;
 const thatYear = years.find(e => e.year === year);
@@ -53,60 +61,13 @@ export function getDayData(date) {
         days.push({
             day: _date.day,
             work: 'null',
-            schedule: []
+            vacation: '',
+            memo: ''
         });
         return getDayData(date);
     }
 
     return thatDay;
-}
-
-export function createTimeSchedule(title, time, price, add) {
-    return {
-        title,
-        time,
-        price,
-        add
-    };
-}
-
-export function createDaySchedule(schedule) {
-    return {
-        "title": schedule,
-        "timeTable": []
-    }
-}
-
-export function insertTimeSchedule(date, schedule, title, time, price, add) {
-    /*
-        1. year년 month월 day일의 데이터에 접근한다.
-        2. schedule과 이름이 같은 daySchedule을 찾는다.
-        3. 새로운 timeSchedule 객체를 생성한다.
-        4. daySchedule에 push 후 return
-        5. 없다면 경고문 출력 후 함수 종료
-    */
-
-    // 해당 날짜에 접근하기
-    const thatDay = getDayData(date);
-    const schedulesAtThatDay = thatDay.schedule;
-
-    console.log(schedulesAtThatDay);
-
-    // 해당 날짜의 대일정 순회
-    for (const s of schedulesAtThatDay) {
-        // 지정한 대일정과 같은 이름을 가진 스케줄을 찾으면 
-        if (s.title === schedule/*new schedule name*/) {
-            // 새로운 timeSchedule 생성
-            const timeSchedule = createTimeSchedule(title, time, price, add);
-
-            // 지정한 대일정 배열에 push 후 종료
-            s.timeTable.push(timeSchedule);
-            return;
-        } 
-    }
-
-    // 지정한 대일정이 없다면 경고문 출력 후 함수 종료
-    console.warn("저장된 일정이 없습니다.");
 }
 
 export function insertDaySchedule(date, schedule) {
@@ -202,4 +163,22 @@ export function getWorkSchedule(date){
     const theDay = getDayData(date);
 
     return theDay.work;
+}
+
+export function getVacation(date){
+    const theDay = getDayData(date);
+
+    return theDay.vacation;
+}
+
+export function insertVacation(date, name){
+    const theDay = getDayData(date);
+
+    theDay.vacation = name;
+}
+
+export function insertMemo(date, memo){
+    const theDay = getDayData(date);
+
+    theDay.memo = memo;
 }

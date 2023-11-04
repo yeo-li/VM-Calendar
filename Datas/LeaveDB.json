@@ -1,5 +1,37 @@
 [
   {
+    "classification": "위로",
+    "dateOfIssuance": "2023-02-10",
+    "name": "신병 위로휴가",
+    "days": 3,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-1",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-2",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "연가",
+    "dateOfIssuance": "2023-03-09",
+    "name": "일병 연가-3",
+    "days": 1,
+    "isUsed": true,
+    "dateOfUse": "2024-10-08"
+  },
+  {
     "classification": "연가",
     "dateOfIssuance": "2023-03-09",
     "name": "일병 연가-4",
@@ -51,14 +83,6 @@
     "classification": "연가",
     "dateOfIssuance": "2023-03-09",
     "name": "일병 연가-10",
-    "days": 1,
-    "isUsed": true,
-    "dateOfUse": "2024-10-08"
-  },
-  {
-    "classification": "연가",
-    "dateOfIssuance": "2023-03-09",
-    "name": "일병 연가-3",
     "days": 1,
     "isUsed": true,
     "dateOfUse": "2024-10-08"
@@ -225,7 +249,7 @@
   },
   {
     "classification": "외박",
-    "dateOfIssuance": "2023-10-27",
+    "dateOfIssuance": "2024-10-08",
     "name": "제 6차 성과제 외박",
     "days": 3,
     "isUsed": false,
@@ -233,9 +257,17 @@
   },
   {
     "classification": "위로",
-    "dateOfIssuance": "2023-10-27",
+    "dateOfIssuance": "2023-11-15",
     "name": "제 6차 크루근무자 위로휴가",
     "days": 1,
+    "isUsed": false,
+    "dateOfUse": "2024-10-08"
+  },
+  {
+    "classification": "포상",
+    "dateOfIssuance": "2024-10-08",
+    "name": "가족 초청 행사",
+    "days": 2,
     "isUsed": false,
     "dateOfUse": "2024-10-08"
   },

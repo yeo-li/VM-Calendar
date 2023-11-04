@@ -51,14 +51,15 @@ export async function clearHTML(template){
 </head>
 <body>
     ${await navigationBar()}
-    ${template}
-    
+    <div id="main">${template}
     <a class="btn" href="#" id="leaveStatusTableToggle">▼ 휴가 현황 표</a>
     <div class="container" id="leaveStatusTable" style="display: none">${await leaveStatusTable()}</div>
     
     <a class="btn" href="#" id="leaveTableToggle">▼ Leave Table</a>
     <div class="container" id="leaveTable" style="display: none">${await leaveTable()}</div>
+    </div>
     
+    <div id="modal"></div>
 <script src="/script/pathnameAdder.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
@@ -80,6 +81,7 @@ export async function html(year, month, url, template){
 </head>
 <body>
     ${await navigationBar()}
+    <div id="main">
     ${await header(year, month, url)}
     ${template}
     
@@ -88,7 +90,8 @@ export async function html(year, month, url, template){
     
     <a class="btn" href="#" id="leaveTableToggle">▼ Leave Table</a>
     <div class="container" id="leaveTable" style="display: none">${await leaveTable()}</div>
-    
+    </div>
+    <div id="modal"></div>
 <script src="/script/pathnameAdder.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
@@ -206,9 +209,10 @@ export async function addNewVacation(){
     </form>`;
 }
 
-export async function searchVacation(url){
+export async function searchVacation(url, date){
     return `
         <form action="${url}" method="get">
+        <input type="hidden" value="${date}" name="date">
         휴가 종류: <input type="text" name="classification">
 
         <input type="submit" value="search">
@@ -220,12 +224,13 @@ export async function submitBtn(value){
     return `<button type="submit" form="leaveTable">${value}</button>`;
 }
 
-export async function searchLeaveTable(actionURL, classification){
+export async function searchLeaveTable(actionURL, classification, date){
     await ls.loadFile();
     const leaves = await ml.getLeaveArray(classification);
     //const leaves = ls.LeaveDB;
     let html = `
         <form action="${actionURL}" method="post" id="leaveTable">
+        <input type="hidden" value="${date}" name="date">
         <table class="table table-bordered">
         <thead class="table-light">
             <th>순번</th>

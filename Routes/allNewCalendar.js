@@ -42,7 +42,7 @@ function createDayHTML(date){
     }
 
     return `
-            <td class="${Class}" id="${convertDateToString(date)}" onclick="modal(${convertDateToString(date)})">
+            <td class="${Class}" id="${convertDateToString(date)}" onclick="Modal('${convertDateToString(date)}')">
                 <a href="#"><div>${date.getDate()}</div></a>
                 <hr>
                 <div >${getWorkSchedule(date)}</div>

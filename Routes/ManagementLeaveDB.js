@@ -92,9 +92,7 @@ export async function getUnusedAndAcquiredLeaveArray(classification){
 
 
 export async function searchLeaveByName(name){
-    let leave;
-
-    leave = LeaveDB.find(leave => leave.name === name);
+    let leave = LeaveDB.find(leave => leave.name === name);
     if(leave === undefined){
         leave = false;
     }

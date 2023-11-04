@@ -1,6 +1,6 @@
 import bodyParser from "body-parser"
 import * as template from './Routes/template.js'
-import express from 'express'
+import express, {query} from 'express'
 import * as ls from './Routes/DBLoaderSaver.js'
 import * as data from './Routes/CalendarAccessor.js'
 import * as ml from './Routes/ManagementLeaveDB.js'
@@ -142,20 +142,46 @@ app.get('/whenisyourleave/NewLeave', async (req, res) => {
 
 app.get('/whenisyourleave/leave/:method', async (req, res) => {
   const method = req.params.method;
+  const date = req.query.date;
 
-  let html = ``;
+  if(method === 'release'){
+    res.redirect(`/whenisyourleave/leave/release/process/start/${date}`);
+  } else{
+    let html = ``;
 
-  html += await template.searchVacation(`/whenisyourleave/leave/${req.params.method}`);
-  if(req.query.classification != null){
-    html += await template.searchLeaveTable(`/whenisyourleave/leave/${method}/process/start`, req.query.classification);
-    html += await template.submitBtn(method);
+    html += await template.searchVacation(`/whenisyourleave/leave/${req.params.method}`, date);
+    if(req.query.classification != null){
+      html += await template.searchLeaveTable(`/whenisyourleave/leave/${method}/process/start`, req.query.classification, req.query.date);
+      html += await template.submitBtn(method);
+    }
+
+    res.send(await template.clearHTML(html));
   }
+});
 
-  res.send(await template.clearHTML(html));
+app.get('/whenisyourleave/leave/release/process/start/:date', async (req, res) => {
+  const datas = req.params.date;
+
+  await ls.withinFile(async () => {
+    let DATE = new Date(datas);
+    let leave = await ml.searchLeaveByName(data.getVacation(DATE));
+
+    leave.isUsed = false;
+    leave.dateOfIssuance = "2024-10-08";
+    for(let i = 0; i < leave.days; i++){
+      console.log(DATE)
+      data.insertVacation(DATE, '');
+      DATE = data.getNextDay(DATE);
+    }
+
+  });
+
+  res.redirect('/whenisyourleave/');
 });
 
 app.post('/whenisyourleave/leave/:method/process/start', async (req, res) => {
   const datas = req.body;
+  console.log(datas);
 
   if(req.params.method === "remove"){
     console.log("remove", datas)
@@ -163,19 +189,41 @@ app.post('/whenisyourleave/leave/:method/process/start', async (req, res) => {
       console.log(key);
       await ml.removeLeaveToLeaveDB(key);
     }
-  } else if(req.params.method === "add"){
+  } else if(req.params.method === "apply"){
     let days = 0;
 
     for(const key of Object.keys(datas)){
-      let leave = await ml.searchLeaveByName(key);
-      days += leave.days;
+      if(key === 'date') continue;
+      await ls.withinFile(async () => {
+        let leave = await ml.searchLeaveByName(key);
+        console.log(key);
+        /*
+      "classification": "외박",
+      "dateOfIssuance": "2024-10-01",
+      "name": "제 15차 성과제 외박",
+      "days": 1,
+      "isUsed": false,
+      "dateOfUse": "2024-10-08"
 
+         */
+        leave.isUsed = true;
+        leave.dateOfIssuance = datas.date;
+        let DATE = new Date(datas.date);
+
+        for(let i = 0; i < leave.days; i++){
+          console.log(DATE)
+          data.insertVacation(DATE, key);
+          DATE = data.getNextDay(DATE);
+        }
+      });
     }
   }
 
 
   res.redirect('/whenisyourleave/');
 });
+
+
 
 
 app.listen(port, () => {
