@@ -36,21 +36,24 @@ function createDayHTML(date){
     let Class = '';
 
     if(date.toLocaleDateString() === today.toLocaleDateString()){
-        Class = "table-warning";
+        Class = "table-danger";
     } else if(getWorkSchedule(date) === '휴' && getVacation(date) === ''){
-        Class = "table-success";
+        Class = "table-secondary";
     } else if(getVacation(date) !== ''){
         Class = "table-primary"
+    } else if(getWorkSchedule(date) === '면'){
+        Class = 'table-success';
+    } else if(getWorkSchedule(date) === '외'){
+        Class = 'table-warning';
     }
 
     let memoAndVacation = ``;
     if(getVacation(date) !== '' || getMemo(date) !== ''){
-        memoAndVacation += `<button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-    ◦
-  </button>`;
+        memoAndVacation += `<a class=" dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    ${date.getDate()}
+  </a>`;
     } else{
-        memoAndVacation += `<button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false"> &nbsp
-  </button>`;
+        memoAndVacation += date.getDate();
     }
 
     memoAndVacation += `<div>
@@ -65,7 +68,7 @@ function createDayHTML(date){
     return `
             <td class="${Class}">
             <div id="TABLE">
-                ${date.getDate()}
+                
             ${memoAndVacation}</div>
                 <hr>
                 <div data-bs-toggle="modal" data-bs-target="#exampleModalCenter" id="${convertDateToString(date)}" onclick="Modal('${convertDateToString(date)}')">${getWorkSchedule(date)}</div>
@@ -84,14 +87,20 @@ function createDayHTMLForEdit(date) {
     let Class = '';
 
     if(date.toLocaleDateString() === today.toLocaleDateString()){
-        Class = "table-warning";
-    } else if(getWorkSchedule(date) === '휴'){
-        Class = "table-success";
+        Class = "table-danger";
+    } else if(getWorkSchedule(date) === '휴' && getVacation(date) === ''){
+        Class = "table-secondary";
+    } else if(getVacation(date) !== ''){
+        Class = "table-primary"
+    } else if(getWorkSchedule(date) === '면'){
+        Class = 'table-success';
+    } else if(getWorkSchedule(date) === '외'){
+        Class = 'table-warning';
     }
 
     return `
             <td class="${Class}">
-                <a href="#"><div>${date.getDate()}</div></a>
+                ${date.getDate()}
                 <hr>
                 <div>
                 <select name="${thisDate.year}/${thisDate.month}/${thisDate.day}" style="width: 40px">
@@ -104,7 +113,7 @@ function createDayHTMLForEdit(date) {
 }
 
 function createOptionTagsHTML(date){
-    let arr = ['주', '야', '비', '휴'];
+    let arr = ['주', '야', '비', '휴', '외', '면'];
     let html = ``;
     const selectedData = getWorkSchedule(date);
     html += createOptionTagHTML(selectedData, true);

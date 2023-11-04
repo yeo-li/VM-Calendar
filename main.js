@@ -146,12 +146,31 @@ app.get('/whenisyourleave/leave/:method', async (req, res) => {
 
   if(method === 'release'){
     res.redirect(`/whenisyourleave/leave/release/process/start/${date}`);
+  } else if(method === 'memo'){
+    let html = `
+    <form action="/whenisyourleave/leave/memo/process/start" method="post">
+    <textarea name="memo">${data.getMemo(new Date(date))}</textarea>
+    <input type="hidden" name="date" value="${date}">
+    <input class="btn btn-primary" type="submit">
+</form>`;
+
+    res.send(await template.clearHTML(html));
+  } else if(method === 'remove'){
+    let html = ``;
+
+    html += await template.searchVacation(`/whenisyourleave/leave/${req.params.method}`, date);
+    if(req.query.classification != null){
+      html += await template.searchLeaveTable(`/whenisyourleave/leave/${method}/process/start`, req.query.classification, req.query.date, "checkbox");
+      html += await template.submitBtn(method);
+    }
+
+    res.send(await template.clearHTML(html));
   } else{
     let html = ``;
 
     html += await template.searchVacation(`/whenisyourleave/leave/${req.params.method}`, date);
     if(req.query.classification != null){
-      html += await template.searchLeaveTable(`/whenisyourleave/leave/${method}/process/start`, req.query.classification, req.query.date);
+      html += await template.searchLeaveTable(`/whenisyourleave/leave/${method}/process/start`, req.query.classification, req.query.date, "radio");
       html += await template.submitBtn(method);
     }
 
@@ -165,17 +184,21 @@ app.get('/whenisyourleave/leave/release/process/start/:date', async (req, res) =
   await ls.withinFile(async () => {
     let leave = await ml.searchLeaveByName(data.getVacation(new Date(datas)));
     let DATE = new Date(leave.dateOfUse);
+    if(leave){
+      leave.isUsed = false;
+      leave.dateOfUse = "2024-10-08";
 
-    leave.isUsed = false;
-    leave.dateOfUse = "2024-10-08";
+      for(let i = 0; i < leave.days; i++){
+        if(data.getVacation(DATE) === leave.name){
+          data.insertVacation(DATE, '');
+          DATE = data.getNextDay(DATE);
+        }
 
-    for(let i = 0; i < leave.days; i++){
-      if(data.getVacation(DATE) === leave.name){
-        data.insertVacation(DATE, '');
-        DATE = data.getNextDay(DATE);
       }
-
+    } else{
+      console.log("release: empty data");
     }
+
 
   });
 
@@ -188,15 +211,25 @@ app.post('/whenisyourleave/leave/:method/process/start', async (req, res) => {
 
   if(req.params.method === "remove"){
     console.log("remove", datas)
+
     for(const key of Object.keys(datas)){
-      console.log(key);
-      await ml.removeLeaveToLeaveDB(key);
+      if(key === 'date') continue;
+      if(typeof datas[key] === 'string'){
+        await ml.removeLeaveToLeaveDB(datas[key]);
+      } else{
+        for(const value of datas[key]){
+          await ml.removeLeaveToLeaveDB(value);
+        }
+      }
     }
+  } else if(req.params.method === "memo"){
+    data.insertMemo(new Date(datas.date), datas.memo);
+
   } else if(req.params.method === "apply"){
     for(const key of Object.keys(datas)){
       if(key === 'date') continue;
       await ls.withinFile(async () => {
-        let leave = await ml.searchLeaveByName(key);
+        let leave = await ml.searchLeaveByName(datas[key]);
         let DATE = new Date(datas.date);
         let isOkay = true;
 
@@ -212,7 +245,7 @@ app.post('/whenisyourleave/leave/:method/process/start', async (req, res) => {
         DATE = new Date(datas.date);
         if(isOkay){
           for(let i = 0; i < leave.days;i++){
-            data.insertVacation(DATE, key);
+            data.insertVacation(DATE, datas[key]);
             DATE = data.getNextDay(DATE);
           }
 

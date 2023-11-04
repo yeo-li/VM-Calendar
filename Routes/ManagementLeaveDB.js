@@ -144,12 +144,9 @@ export async function removeLeaveToLeaveDB(name){
         tmp = LeaveDB[0];
         LeaveDB[0] = LeaveDB[idx];
         LeaveDB[idx] = tmp;
-
-        LeaveDB.shift();
-
+        await LeaveDB.shift();
         await sortLeavesByDateAscending();
     });
-
     return true;
 }
 

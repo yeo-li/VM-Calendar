@@ -57,34 +57,46 @@ function submitForm(uniqueValue){
 function Modal(date){
 
     const myForm = document.createElement('form');
+    myForm.className = 'row';
     myForm.id = 'myForm';
     myForm.method = 'get';
+
+    const div = document.createElement('div');
+    div.className = 'row';
+
     const hiddenInput = document.createElement('input');
     hiddenInput.type = 'hidden';
     hiddenInput.value = date;
     hiddenInput.name = "date";
 
-    const applyVacationBtn = document.createElement('a');
+
+
+    const applyVacationBtn = document.createElement('div');
+    applyVacationBtn.style.margin = '7px 7px';
     applyVacationBtn.className='btn btn-primary';
     applyVacationBtn.innerHTML = '휴가 추가';
     applyVacationBtn.onclick = function () {submitForm('apply')};
 
-    const releaseVacationBtn = document.createElement('a');
+    const releaseVacationBtn = document.createElement('div');
+    releaseVacationBtn.style.margin = '7px 7px';
     releaseVacationBtn.className='btn btn-primary';
     releaseVacationBtn.innerHTML = '휴가 해제';
     releaseVacationBtn.onclick = function () {submitForm('release')};
 
-    const addMemoBtn = document.createElement('a');
+    const addMemoBtn = document.createElement('div');
+    addMemoBtn.style.margin = '7px 7px';
     addMemoBtn.className='btn btn-primary';
-    addMemoBtn.innerHTML = '메모 추가';
+    addMemoBtn.innerHTML = '메모 추가/수정';
     addMemoBtn.onclick = function (){submitForm('memo')};
 
 
-    myForm.appendChild(hiddenInput);
-    myForm.appendChild(applyVacationBtn);
-    myForm.appendChild(releaseVacationBtn);
-    myForm.appendChild(addMemoBtn);
-
+    div.appendChild(hiddenInput);
+    div.appendChild(applyVacationBtn);
+    div.appendChild(document.createElement('br'));
+    div.appendChild(releaseVacationBtn);
+    div.appendChild(document.createElement('br'));
+    div.appendChild(addMemoBtn);
+    myForm.appendChild(div);
     document.getElementById('modal').innerHTML = '';
 
     document.getElementById('modal').appendChild(myForm);

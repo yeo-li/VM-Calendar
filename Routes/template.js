@@ -14,13 +14,16 @@ async function navigationBar(){
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" id="add-pathname" aria-current="page" href="#">Edit Calendar</a>
+                    <a class="nav-link active" id="add-pathname" aria-current="page" href="#">Edit Work Schedule</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/whenisyourleave/NewLeave">Add New Leave</a>
+                    <a class="nav-link active" href="/whenisyourleave/NewLeave">Add New Leave</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://www.notion.so/a258a9fe4c0f46ab8494f6910539faf9">Couple Notion</a>
+                    <a class="nav-link active" href="/whenisyourleave/leave/remove">Remove Leave</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="https://www.notion.so/a258a9fe4c0f46ab8494f6910539faf9">Couple Notion</a>
                 </li>
             </ul>
         </div>
@@ -229,8 +232,15 @@ export async function searchVacation(url, date){
     return `
         <form action="${url}" method="get">
         <input type="hidden" value="${date}" name="date">
-        휴가 종류: <input type="text" name="classification">
-
+        휴가 종류:
+        <select name="classification">
+        <option>--선택--</option>
+        <option value="외박">외박</option>
+        <option value="위로">위로</option>
+        <option value="연가">연가</option>
+        <option value="포상">포상</option>
+        <option value="청원">청원</option>
+</select>
         <input type="submit" value="search">
     </form>
     `
@@ -240,7 +250,7 @@ export async function submitBtn(value){
     return `<button type="submit" form="leaveTable">${value}</button>`;
 }
 
-export async function searchLeaveTable(actionURL, classification, date){
+export async function searchLeaveTable(actionURL, classification, date, checkType){
     await ls.loadFile();
     const leaves = await ml.getLeaveArray(classification);
     //const leaves = ls.LeaveDB;
@@ -251,8 +261,6 @@ export async function searchLeaveTable(actionURL, classification, date){
         <thead class="table-light">
             <th>순번</th>
             <th>휴가명</th>
-            <th>발급일</th>
-            <th>사용 여부</th>
             <th>일 수</th>
             <th>선택</th>
         </thead><tbody>
@@ -268,10 +276,8 @@ export async function searchLeaveTable(actionURL, classification, date){
         html += `<tr>
             <td>${i+1}</td>
             <td>${leaves[i].name}</td>
-            <td>${leaves[i].dateOfIssuance}</td>
-            <td>${leaves[i].isUsed}</td>
             <td>${leaves[i].days}</td>
-            <td><input type="checkbox" name="${leaves[i].name}"></td>
+            <td><input type="${checkType}" name="isChecked" value="${leaves[i].name}"></td>
         </tr>`;
     }
 
